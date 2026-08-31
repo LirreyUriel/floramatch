@@ -628,6 +628,21 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       climate: null,
     };
 
+    const QUIZ_STEP_NAMES = ["Region", "Experience", "Preferences", "Placement", "Indoor climate"];
+
+    function fmLog(message, extra) {
+      if (extra !== undefined) console.log("[FloraMatch] " + message, extra);
+      else console.log("[FloraMatch] " + message);
+    }
+
+    function quizStepLabel(step) {
+      return "step " + (step + 1) + "/" + TOTAL_STEPS + " (" + (QUIZ_STEP_NAMES[step] || "unknown") + ")";
+    }
+
+    function plantNames(plants) {
+      return (plants || []).map(function (p) { return p.name; }).join(", ") || "(none)";
+    }
+
     function unique(list) {
       return list.filter(function (item, i) { return list.indexOf(item) === i; });
     }
@@ -647,15 +662,35 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     function readState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return defaultState();
-        return Object.assign(defaultState(), JSON.parse(raw));
+        if (!raw) {
+          fmLog("No saved state found. Starting with an empty quiz.");
+          return defaultState();
+        }
+        const parsed = Object.assign(defaultState(), JSON.parse(raw));
+        fmLog("Restored saved state.", {
+          screen: parsed.screen,
+          quizStep: (parsed.step || 0) + 1,
+          rooms: (parsed.rooms || []).length,
+          results: (parsed.results || []).length,
+        });
+        return parsed;
       } catch (e) {
+        fmLog("Could not read saved state. Starting fresh.", e && e.message);
         return defaultState();
       }
     }
 
     function writeState(state) {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        fmLog("Saved app state to localStorage.", {
+          screen: state.screen,
+          quizStep: (state.step || 0) + 1,
+          rooms: (state.rooms || []).length,
+        });
+      } catch (e) {
+        fmLog("Could not write saved state.", e && e.message);
+      }
     }
 
     function isAnswered(value) {
@@ -798,10 +833,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       const failedState = useState(false);
       const failed = failedState[0];
       const setFailed = failedState[1];
+      useEffect(function () {
+        if (!props.src) fmLog("Plant photo missing for \"" + (props.alt || "unknown") + "\".");
+      }, [props.src, props.alt]);
       if (failed || !props.src) {
         return html`<div className="photo-fallback" aria-hidden="true"><${IconLeaf} className=${props.iconClass || "h-16 w-16 text-forest"} /></div>`;
       }
-      return html`<img src=${props.src} alt=${props.alt || ""} className="plant-photo" loading="lazy" referrerPolicy="no-referrer" onError=${function () { setFailed(true); }} />`;
+      return html`<img src=${props.src} alt=${props.alt || ""} className="plant-photo" loading="lazy" referrerPolicy="no-referrer" onError=${function () {
+        fmLog("Plant photo failed to load: " + props.src + " (" + (props.alt || "unknown") + ").");
+        setFailed(true);
+      }} />`;
     }
 
     function AnswerIcon(props) {
@@ -947,7 +988,19 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     function Questionnaire(props) {
       const form = props.form;
       const step = props.step;
+      useEffect(function () {
+        fmLog("Opened quiz " + quizStepLabel(step) + ".", {
+          region: form.region,
+          experience: form.experience,
+          petFriendly: form.petFriendly,
+          rareWater: form.rareWater,
+          placement: form.placement,
+          climate: form.climate,
+        });
+      }, [step]);
       function setField(key, value) {
+        const display = Array.isArray(value) ? (value.length ? value.join(", ") : "(none)") : String(value);
+        fmLog("Answered " + quizStepLabel(step) + " — " + key + ": " + display);
         const patch = {};
         patch[key] = value;
         props.onChangeForm(patch);
@@ -972,20 +1025,29 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       function goNext(e) {
         e.preventDefault();
         if (!currentAnswered()) {
+          fmLog("Next blocked on " + quizStepLabel(step) + ": no option chosen.");
           props.setError("Choose an option, or tap Skip so this question is ignored in matching.");
           return;
         }
         props.setError("");
-        if (step < TOTAL_STEPS - 1) props.setStep(step + 1);
-        else props.onSubmit(null);
+        if (step < TOTAL_STEPS - 1) {
+          fmLog("Next from " + quizStepLabel(step) + " → " + quizStepLabel(step + 1) + ".");
+          props.setStep(step + 1);
+        } else {
+          fmLog("Submitted quiz from " + quizStepLabel(step) + ". Running match.");
+          props.onSubmit(null);
+        }
       }
       function skipQuestion() {
         const skipped = skipPatches();
+        const keys = Object.keys(skipped).join(", ");
+        fmLog("Skipped " + quizStepLabel(step) + ". Cleared: " + keys + ".");
         props.setError("");
         if (step < TOTAL_STEPS - 1) {
           props.onChangeForm(skipped);
           props.setStep(step + 1);
         } else {
+          fmLog("Skipped last step. Running match without that answer.");
           props.onSubmit(skipped);
         }
       }
@@ -1012,8 +1074,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                   opt=${opt}
                   checked=${on}
                   onChange=${function (e) {
+                    const on = e.target.checked ? true : false;
+                    fmLog("Answered " + quizStepLabel(step) + " — " + opt.label + ": " + (on ? "yes" : "no") + ".");
                     const patch = {};
-                    patch[opt.value] = e.target.checked ? true : false;
+                    patch[opt.value] = on;
                     props.onChangeForm(patch);
                     props.setError("");
                   }}
@@ -1048,7 +1112,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div key=${step} className="step-enter min-h-[200px] sm:min-h-[260px]">${questions[step]}</div>
           ${props.error && html`<p className="mt-4 rounded-3xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800 ring-1 ring-rose-200" role="alert">${props.error}</p>`}
           <div className="mt-5 flex gap-2 sm:mt-8 sm:gap-3">
-            <button type="button" onClick=${function () { props.setError(""); if (step > 0) props.setStep(step - 1); else if (props.onExit) props.onExit(); }} className="rounded-2xl border-2 border-sage-deep bg-white px-3 py-2.5 text-sm font-semibold text-forest transition hover:bg-sage sm:rounded-3xl sm:px-5 sm:py-3">Back</button>
+            <button type="button" onClick=${function () {
+              props.setError("");
+              if (step > 0) {
+                fmLog("Back from " + quizStepLabel(step) + " → " + quizStepLabel(step - 1) + ".");
+                props.setStep(step - 1);
+              } else if (props.onExit) {
+                fmLog("Back from first quiz step. Leaving the quiz.");
+                props.onExit();
+              }
+            }} className="rounded-2xl border-2 border-sage-deep bg-white px-3 py-2.5 text-sm font-semibold text-forest transition hover:bg-sage sm:rounded-3xl sm:px-5 sm:py-3">Back</button>
             <button type="button" onClick=${skipQuestion} className="rounded-2xl border-2 border-sage-deep bg-white px-3 py-2.5 text-sm font-semibold text-forest transition hover:bg-sage sm:rounded-3xl sm:px-5 sm:py-3">Skip</button>
             <button type="submit" className=${"flex-1 rounded-2xl bg-forest px-4 py-2.5 text-base font-bold text-white shadow-md transition hover:bg-forest-dark sm:rounded-3xl sm:px-6 sm:py-3 sm:text-lg " + (currentAnswered() ? "" : "opacity-50")}>
               ${step === TOTAL_STEPS - 1 ? "Results" : "Next"}
@@ -1064,7 +1137,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       const setName = nameState[1];
       function save(roomName) {
         const trimmed = (roomName || name).trim();
-        if (!trimmed) return;
+        if (!trimmed) {
+          fmLog("Room save blocked: empty room name.");
+          return;
+        }
+        fmLog("Saving matches to room \"" + trimmed + "\".");
         props.onSave(trimmed);
         setName("");
       }
@@ -1086,7 +1163,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <input value=${name} onInput=${function (e) { setName(e.target.value); }} placeholder="Another room" className="flex-1 rounded-2xl border-2 border-sage-deep px-4 py-2.5 text-sm outline-none focus:border-forest sm:py-3" />
             <button type="submit" className="rounded-2xl bg-forest px-4 py-2.5 text-sm font-bold text-white hover:bg-forest-dark sm:px-5 sm:py-3">Save</button>
           </form>
-          <button type="button" onClick=${props.onDismiss} className="mt-3 text-sm font-semibold text-charcoal/55 hover:text-forest">Not now</button>
+          <button type="button" onClick=${function () {
+            fmLog("Dismissed save-to-room prompt. Matches were not saved.");
+            props.onDismiss();
+          }} className="mt-3 text-sm font-semibold text-charcoal/55 hover:text-forest">Not now</button>
         </div>
       `;
     }
@@ -1133,7 +1213,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
     function RoomsView(props) {
       const addCard = html`
-        <button type="button" onClick=${props.onAdd} className="add-room-card fade-up rounded-3xl border-2 border-dashed border-forest/30 bg-white p-5 text-center shadow-lg ring-1 ring-forest/5">
+        <button type="button" onClick=${function () {
+          fmLog("Add new room clicked. Starting a fresh quiz.");
+          props.onAdd();
+        }} className="add-room-card fade-up rounded-3xl border-2 border-dashed border-forest/30 bg-white p-5 text-center shadow-lg ring-1 ring-forest/5">
           <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sage text-3xl font-light leading-none text-forest sm:h-16 sm:w-16 sm:text-4xl">+</span>
           <span className="text-base font-extrabold text-forest sm:text-lg">Add new room</span>
           <span className="hidden max-w-[16rem] text-sm leading-6 text-charcoal/65 sm:block">Start a fresh plant match and save it to a room.</span>
@@ -1170,7 +1253,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                         <p className="text-xs text-charcoal/50">${room.savedAt ? new Date(room.savedAt).toLocaleDateString() : ""}</p>
                       </div>
                     </div>
-                    <button type="button" onClick=${function () { props.onDelete(room.id); }} className="text-xs font-semibold text-rose-700 hover:underline">Delete</button>
+                    <button type="button" onClick=${function () {
+                      fmLog("Delete room requested: \"" + room.name + "\" (id " + room.id + ").");
+                      props.onDelete(room.id);
+                    }} className="text-xs font-semibold text-rose-700 hover:underline">Delete</button>
                   </div>
                   <div className="mt-3 flex gap-2 overflow-x-auto sm:mt-4">
                     ${(room.results || []).map(function (plant) {
@@ -1216,11 +1302,24 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
       useEffect(function () { writeState(appState); }, [appState]);
 
+      useEffect(function () {
+        fmLog("App ready.", {
+          screen: appState.screen,
+          quizStep: (appState.step || 0) + 1,
+          rooms: (appState.rooms || []).length,
+          plantsInDb: plantDatabase.length,
+        });
+      }, []);
+
       function patch(partial) {
+        if (partial.screen && partial.screen !== appState.screen) {
+          fmLog("Navigating to screen: " + partial.screen + ".");
+        }
         setAppState(function (prev) { return Object.assign({}, prev, partial); });
       }
 
       function changeForm(fields) {
+        fmLog("Quiz form updated.", fields);
         setAppState(function (prev) {
           return Object.assign({}, prev, { form: Object.assign({}, prev.form, fields) });
         });
@@ -1228,40 +1327,74 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
       function runMatch(relax, formPatch) {
         setError("");
+        fmLog(relax ? "Broadening search (dropping pet, watering, placement, and climate filters)." : "Running plant match.");
         setAppState(function (prev) {
           const form = formPatch ? Object.assign({}, prev.form, formPatch) : prev.form;
+          fmLog("Match filters.", form);
           let matches = matchPlants(form);
+          let usedRelax = false;
           if (relax && matches.length < 3) {
             const openForm = Object.assign({}, form, { petFriendly: null, rareWater: null, placement: null, climate: null });
             const wider = matchPlants(openForm);
-            if (wider.length > matches.length) matches = wider;
+            if (wider.length > matches.length) {
+              matches = wider;
+              usedRelax = true;
+            }
+          }
+          if (matches.length) {
+            fmLog("Match complete: " + matches.length + " plant(s) — " + plantNames(matches) + (usedRelax ? " (broadened)." : "."));
+          } else {
+            fmLog("Match complete: no plants fit these answers.");
           }
           return Object.assign({}, prev, { form: form, results: matches, screen: "results", savePromptOpen: matches.length > 0 });
         });
       }
 
-      function startFreshQuiz() {
+      function startFreshQuiz(source) {
         setError("");
+        fmLog("Starting a new quiz" + (source ? " (" + source + ")" : "") + ".");
         patch({ form: Object.assign({}, EMPTY_FORM), step: 0, results: [], screen: "form", savePromptOpen: false });
       }
 
       function exitQuiz() {
         setError("");
-        if (appState.results && appState.results.length) patch({ screen: "results" });
-        else patch({ screen: "rooms" });
+        if (appState.results && appState.results.length) {
+          fmLog("Left quiz. Returning to results.");
+          patch({ screen: "results" });
+        } else {
+          fmLog("Left quiz. Opening My Rooms.");
+          patch({ screen: "rooms" });
+        }
       }
 
       function copyList() {
         const plants = appState.results || [];
-        if (!plants.length) return;
+        if (!plants.length) {
+          fmLog("Copy list skipped: no results.");
+          return;
+        }
         const text = formatPlantList(plants);
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () { setToast("List copied to clipboard"); }).catch(function () { setToast("Could not copy"); });
-        } else setToast("Could not copy");
+          navigator.clipboard.writeText(text).then(function () {
+            fmLog("Copied plant list to clipboard.");
+            setToast("List copied to clipboard");
+          }).catch(function () {
+            fmLog("Clipboard copy failed.");
+            setToast("Could not copy");
+          });
+        } else {
+          fmLog("Clipboard API unavailable.");
+          setToast("Could not copy");
+        }
       }
 
       function saveRoom(name) {
-        const room = { id: uid(), name: name, form: Object.assign({}, appState.form), results: (appState.results || []).slice(), savedAt: Date.now() };
+        const plants = (appState.results || []).slice();
+        const room = { id: uid(), name: name, form: Object.assign({}, appState.form), results: plants, savedAt: Date.now() };
+        fmLog("Created room \"" + name + "\" with " + plants.length + " plant(s): " + plantNames(plants) + ".", {
+          roomId: room.id,
+          form: room.form,
+        });
         setAppState(function (prev) {
           return Object.assign({}, prev, { rooms: prev.rooms.concat([room]), savePromptOpen: false });
         });
@@ -1269,6 +1402,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       }
 
       function deleteRoom(id) {
+        const existing = (appState.rooms || []).filter(function (r) { return r.id === id; })[0];
+        fmLog("Deleted room \"" + (existing && existing.name ? existing.name : id) + "\".", { roomId: id });
         setAppState(function (prev) {
           return Object.assign({}, prev, { rooms: prev.rooms.filter(function (r) { return r.id !== id; }) });
         });
@@ -1283,7 +1418,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div className="min-h-screen">
           <header className="border-b border-forest/10 bg-white/80 shadow-sm backdrop-blur">
             <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-4">
-              <button type="button" onClick=${function () { patch({ screen: "form" }); }} className="flex min-w-0 items-center gap-2.5 text-left sm:gap-3">
+              <button type="button" onClick=${function () {
+                fmLog("Header logo clicked. Opening Match.");
+                patch({ screen: "form" });
+              }} className="flex min-w-0 items-center gap-2.5 text-left sm:gap-3">
                 <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-forest text-white shadow-md sm:h-12 sm:w-12 sm:rounded-3xl sm:shadow-lg"><${IconLeaf} className="h-5 w-5 sm:h-6 sm:w-6" /></span>
                 <span className="min-w-0">
                   <span className="block text-lg font-extrabold leading-none text-forest sm:text-xl">FloraMatch</span>
@@ -1291,9 +1429,19 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 </span>
               </button>
               <nav className="grid grid-cols-3 gap-1.5 sm:flex sm:gap-2">
-                <button type="button" onClick=${function () { patch({ screen: appState.results && appState.results.length ? "results" : "form" }); }} className=${navClass(screen === "form" || screen === "results")}>Match</button>
-                <button type="button" onClick=${function () { patch({ screen: "rooms" }); }} className=${navClass(screen === "rooms")}>${"Rooms" + (appState.rooms.length ? " (" + appState.rooms.length + ")" : "")}</button>
-                <button type="button" onClick=${function () { patch({ screen: "doctor" }); }} className=${"inline-flex items-center justify-center gap-1 " + navClass(screen === "doctor")}>
+                <button type="button" onClick=${function () {
+                  const next = appState.results && appState.results.length ? "results" : "form";
+                  fmLog("Nav: Match → " + next + ".");
+                  patch({ screen: next });
+                }} className=${navClass(screen === "form" || screen === "results")}>Match</button>
+                <button type="button" onClick=${function () {
+                  fmLog("Nav: Rooms (" + appState.rooms.length + " saved).");
+                  patch({ screen: "rooms" });
+                }} className=${navClass(screen === "rooms")}>${"Rooms" + (appState.rooms.length ? " (" + appState.rooms.length + ")" : "")}</button>
+                <button type="button" onClick=${function () {
+                  fmLog("Nav: Plant Doctor (coming soon).");
+                  patch({ screen: "doctor" });
+                }} className=${"inline-flex items-center justify-center gap-1 " + navClass(screen === "doctor")}>
                   <span>Doctor</span>
                   <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[9px] font-extrabold tracking-wide text-amber-800">SOON</span>
                 </button>
@@ -1324,10 +1472,17 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <${Results}
                 plants=${appState.results || []}
                 savePromptOpen=${appState.savePromptOpen}
-                onBack=${function () { setError(""); patch({ screen: "form", step: 0 }); }}
-                onReset=${startFreshQuiz}
+                onBack=${function () {
+                  fmLog("Back to quiz from results. Returning to step 1.");
+                  setError("");
+                  patch({ screen: "form", step: 0 });
+                }}
+                onReset=${function () { startFreshQuiz("new-quiz from results"); }}
                 onCopy=${copyList}
-                onRelax=${function () { runMatch(true); }}
+                onRelax=${function () {
+                  fmLog("Broaden search clicked.");
+                  runMatch(true);
+                }}
                 onSaveRoom=${saveRoom}
                 onDismissSave=${function () { patch({ savePromptOpen: false }); }}
               />
