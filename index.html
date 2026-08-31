@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FloraMatch — Indoor plant matching by light and climate</title>
-  <meta name="description" content="Find houseplants that fit your region, experience, and lighting — then save matches by room." />
+  <title>FloraMatch — Indoor plant matching by region and climate</title>
+  <meta name="description" content="Find houseplants that fit your region, experience, and room climate — then save matches by room." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
     @theme {
-      --color-forest: #1B4D3E;
-      --color-forest-dark: #14382C;
-      --color-forest-light: #2D6A56;
+      --color-forest: #3D9B74;
+      --color-forest-dark: #2E7D5C;
+      --color-forest-light: #5BB58A;
       --color-sage: #E8F5E9;
       --color-sage-deep: #C8E6C9;
       --color-charcoal: #2C3E50;
@@ -27,12 +27,12 @@
     body {
       background-color: #E8F5E9;
       background-image:
-        radial-gradient(ellipse 80% 50% at 100% -10%, rgba(27, 77, 62, 0.10), transparent),
-        radial-gradient(ellipse 60% 40% at 0% 100%, rgba(27, 77, 62, 0.08), transparent);
+        radial-gradient(ellipse 80% 50% at 100% -10%, rgba(61, 155, 116, 0.10), transparent),
+        radial-gradient(ellipse 60% 40% at 0% 100%, rgba(61, 155, 116, 0.08), transparent);
       min-height: 100vh;
     }
     .leaf-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 8c6 8 8 16 8 22 0 10-8 18-8 18s-8-8-8-18c0-6 2-14 8-22z' fill='%231B4D3E' fill-opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 8c6 8 8 16 8 22 0 10-8 18-8 18s-8-8-8-18c0-6 2-14 8-22z' fill='%233D9B74' fill-opacity='0.06'/%3E%3C/svg%3E");
     }
     .option-card {
       animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -55,21 +55,21 @@
       border-radius: 1.5rem;
       border: 2px solid #C8E6C9;
       background: #ffffff;
-      box-shadow: 0 8px 20px rgba(27, 77, 62, 0.06);
+      box-shadow: 0 8px 20px rgba(61, 155, 116, 0.08);
       transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
     }
     .option-card:hover .option-face {
       transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 16px 32px rgba(27, 77, 62, 0.12);
-      border-color: #2D6A56;
+      box-shadow: 0 16px 32px rgba(61, 155, 116, 0.14);
+      border-color: #5BB58A;
     }
     .option-card input:checked + .option-face {
-      border-color: #1B4D3E;
+      border-color: #3D9B74;
       background: #E8F5E9;
-      box-shadow: 0 0 0 3px rgba(27, 77, 62, 0.18), 0 14px 28px rgba(27, 77, 62, 0.12);
+      box-shadow: 0 0 0 3px rgba(61, 155, 116, 0.20), 0 14px 28px rgba(61, 155, 116, 0.12);
     }
     .option-card input:focus-visible + .option-face {
-      outline: 2px solid #1B4D3E;
+      outline: 2px solid #3D9B74;
       outline-offset: 3px;
     }
     .option-icon-wrap {
@@ -80,7 +80,7 @@
       align-items: center;
       justify-content: center;
       background: linear-gradient(160deg, #F4FBF5 0%, #C8E6C9 100%);
-      color: #1B4D3E;
+      color: #3D9B74;
       margin-bottom: 0.55rem;
       flex-shrink: 0;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
@@ -88,13 +88,13 @@
     }
     .option-card:hover .option-icon-wrap { transform: scale(1.07); }
     .option-card input:checked + .option-face .option-icon-wrap {
-      background: linear-gradient(160deg, #1B4D3E 0%, #2D6A56 100%);
+      background: linear-gradient(160deg, #3D9B74 0%, #5BB58A 100%);
       color: #E8F5E9;
-      box-shadow: 0 8px 16px rgba(27, 77, 62, 0.22);
+      box-shadow: 0 8px 16px rgba(61, 155, 116, 0.22);
     }
     .option-label {
       font-weight: 700;
-      color: #1B4D3E;
+      color: #3D9B74;
       font-size: 0.88rem;
       line-height: 1.25;
       letter-spacing: -0.01em;
@@ -117,12 +117,12 @@
       width: 1.35rem;
       height: 1.35rem;
       border-radius: 999px;
-      background: #1B4D3E;
+      background: #3D9B74;
       color: #fff;
       display: none;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(27, 77, 62, 0.25);
+      box-shadow: 0 4px 10px rgba(61, 155, 116, 0.25);
     }
     .option-card input:checked + .option-face .option-check {
       display: flex;
@@ -139,7 +139,7 @@
         min-height: 5.6rem;
         padding: 0.6rem 0.35rem 0.45rem;
         border-radius: 1.15rem;
-        box-shadow: 0 4px 12px rgba(27, 77, 62, 0.05);
+        box-shadow: 0 4px 12px rgba(61, 155, 116, 0.05);
       }
       .option-icon-wrap { width: 2.85rem; height: 2.85rem; margin-bottom: 0.28rem; border-radius: 0.95rem; }
       .option-label { font-size: 0.72rem; }
@@ -174,7 +174,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      background: linear-gradient(160deg, #C8E6C9 0%, #1B4D3E 120%);
+      background: linear-gradient(160deg, #C8E6C9 0%, #3D9B74 120%);
     }
     .photo-fallback {
       width: 100%;
@@ -182,8 +182,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(160deg, #E8F5E9 0%, #C8E6C9 45%, #1B4D3E 160%);
-      color: #1B4D3E;
+      background: linear-gradient(160deg, #E8F5E9 0%, #C8E6C9 45%, #3D9B74 160%);
+      color: #3D9B74;
     }
     .podium {
       display: grid;
@@ -201,7 +201,7 @@
     }
     .podium-card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 22px 44px rgba(27, 77, 62, 0.16);
+      box-shadow: 0 22px 44px rgba(61, 155, 116, 0.16);
     }
     .podium-1 {
       transform: translateY(-18px);
@@ -216,7 +216,7 @@
       left: 50%;
       transform: translateX(-50%);
       font-size: 1.35rem;
-      filter: drop-shadow(0 4px 8px rgba(27, 77, 62, 0.25));
+      filter: drop-shadow(0 4px 8px rgba(61, 155, 116, 0.25));
       animation: badgePop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
     .add-room-card {
@@ -230,8 +230,8 @@
     }
     .add-room-card:hover {
       transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 18px 36px rgba(27, 77, 62, 0.12);
-      border-color: #1B4D3E;
+      box-shadow: 0 18px 36px rgba(61, 155, 116, 0.12);
+      border-color: #3D9B74;
     }
     @media (max-width: 768px) {
       .podium {
@@ -244,13 +244,13 @@
       .podium-1, .podium-1:hover, .podium-card:hover {
         transform: none;
       }
-      .podium-card { box-shadow: 0 8px 20px rgba(27, 77, 62, 0.08); }
+      .podium-card { box-shadow: 0 8px 20px rgba(61, 155, 116, 0.08); }
     }
   </style>
 </head>
 <body class="text-charcoal leaf-pattern">
   <div id="root">
-    <p style="text-align:center;padding:3rem;color:#1B4D3E;font-weight:600">Loading FloraMatch…</p>
+    <p style="text-align:center;padding:3rem;color:#3D9B74;font-weight:600">Loading FloraMatch…</p>
   </div>
 
   <script>
@@ -563,16 +563,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 </script>
   <script>
     if (typeof React === "undefined" || typeof ReactDOM === "undefined" || typeof htm === "undefined") {
-      document.getElementById("root").innerHTML = '<p style="text-align:center;padding:3rem;color:#1B4D3E">Could not load FloraMatch. Check your connection and try again.</p>';
+      document.getElementById("root").innerHTML = '<p style="text-align:center;padding:3rem;color:#3D9B74">Could not load FloraMatch. Check your connection and try again.</p>';
       throw new Error("FloraMatch dependencies failed to load");
     }
 
     const html = htm.bind(React.createElement);
     const { useState, useEffect } = React;
 
-    const STORAGE_KEY = "floramatch.v4";
-    const TOTAL_STEPS = 8;
-    const RAW_PLANTS = [{"id": 1, "name": "Snake Plant", "nameLat": "Sansevieria trifasciata", "difficulty": "beginner", "directions": ["north", "south", "east", "west", "dark"], "light": ["direct-high", "indirect", "shade"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3-4 weeks", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America"], "description": "Extremely resilient, tolerates low light and neglect.", "image": "photos/1.jpg"}, {"id": 2, "name": "ZZ Plant", "nameLat": "Zamioculcas zamiifolia", "difficulty": "beginner", "directions": ["north", "east", "west", "dark"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America"], "description": "Thrives on neglect with glossy, dark green leaves.", "image": "photos/2.jpg"}, {"id": 3, "name": "Golden Pothos", "nameLat": "Epipremnum aureum", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 1-1.5 weeks", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America"], "description": "Fast-growing trailing vine that adapts to various indoor conditions.", "image": "photos/3.jpg"}, {"id": 4, "name": "Monstera Deliciosa", "nameLat": "Monstera deliciosa", "difficulty": "intermediate", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": false, "rareWater": false, "waterFreq": "When top 2 inches are dry", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America"], "description": "Iconic split leaves that add a tropical statement to any room.", "image": "photos/4.jpg"}, {"id": 5, "name": "Peace Lily", "nameLat": "Spathiphyllum", "difficulty": "beginner", "directions": ["north", "east"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": false, "waterFreq": "Twice a week (droops when thirsty)", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Elegant dark foliage with striking white blooms.", "image": "photos/5.jpg"}, {"id": 6, "name": "Spider Plant", "nameLat": "Chlorophytum comosum", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect", "shade"], "petFriendly": true, "rareWater": false, "waterFreq": "Once a week", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America"], "description": "Pet-safe classic plant that produces cute little spiderettes.", "image": "photos/6.jpg"}, {"id": 7, "name": "Cast Iron Plant", "nameLat": "Aspidistra elatior", "difficulty": "beginner", "directions": ["north", "dark"], "light": ["shade", "indirect"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 2-3 weeks", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Virtually indestructible, perfect for dim indoor spaces.", "image": "photos/7.jpg"}, {"id": 8, "name": "Aloe Vera", "nameLat": "Aloe vera", "difficulty": "beginner", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Succulent with medicinal gel in its thick leaves, loves sun.", "image": "photos/8.jpg"}, {"id": 9, "name": "Jade Plant", "nameLat": "Crassula ovata", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["direct-high", "indirect"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 2-3 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Classic thick-stemmed succulent bringing good fortune.", "image": "photos/9.jpg"}, {"id": 10, "name": "Heartleaf Philodendron", "nameLat": "Philodendron hederaceum", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Charming heart-shaped trailing leaves.", "image": "photos/10.jpg"}, {"id": 11, "name": "Fiddle Leaf Fig", "nameLat": "Ficus lyrata", "difficulty": "expert", "directions": ["east", "west", "south"], "light": ["direct-high", "indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "When topsoil is fully dry", "regions": ["Western Europe", "North America"], "description": "Large, violin-shaped glossy leaves making an artistic design statement.", "image": "photos/11.jpg"}, {"id": 12, "name": "Prayer Plant", "nameLat": "Maranta leuconeura", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep consistently moist", "regions": ["Western Europe", "North America"], "description": "Fascinating patterned leaves that fold up at night.", "image": "photos/12.jpg"}, {"id": 13, "name": "Syngonium", "nameLat": "Syngonium podophyllum", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "When soil dries slightly", "regions": ["Western Europe", "North America", "Eastern Europe"], "description": "Arrowhead-shaped foliage with beautiful variegation.", "image": "photos/13.jpg"}, {"id": 14, "name": "Chinese Evergreen", "nameLat": "Aglaonema", "difficulty": "beginner", "directions": ["north", "east", "west", "dark"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 10 days", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America"], "description": "Colorful patterned leaves that tolerate low light well.", "image": "photos/14.jpg"}, {"id": 15, "name": "Dragon Tree", "nameLat": "Dracaena marginata", "difficulty": "beginner", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Slender trunks crowned with spiky, red-edged leaves.", "image": "photos/15.jpg"}, {"id": 16, "name": "Yucca Cane", "nameLat": "Yucca elephantipes", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Woody trunk with stiff sword-like green leaves.", "image": "photos/16.jpg"}, {"id": 17, "name": "Boston Fern", "nameLat": "Nephrolepis exaltata", "difficulty": "intermediate", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep moist (high humidity)", "regions": ["Western Europe", "North America"], "description": "Lush, feathery fronds ideal for hanging baskets.", "image": "photos/17.jpg"}, {"id": 18, "name": "English Ivy", "nameLat": "Hedera helix", "difficulty": "intermediate", "directions": ["north", "east", "west"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Classic climbing or trailing vine with lobed leaves.", "image": "photos/18.jpg"}, {"id": 19, "name": "Zebra Haworthia", "nameLat": "Haworthia fasciata", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["direct-high", "indirect"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Small succulent featuring white bumpy stripes resembling zebra patterns.", "image": "photos/19.jpg"}, {"id": 20, "name": "Baby Rubber Plant", "nameLat": "Peperomia obtusifolia", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Western Europe", "North America"], "description": "Compact plant with thick, spoon-shaped succulent leaves.", "image": "photos/20.jpg"}, {"id": 21, "name": "Bird of Paradise", "nameLat": "Strelitzia nicolai", "difficulty": "intermediate", "directions": ["south", "east", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 10 days", "regions": ["Middle East", "North America"], "description": "Grand tropical foliage with massive banana-like leaves.", "image": "photos/21.jpg"}, {"id": 22, "name": "Wax Plant", "nameLat": "Hoya carnosa", "difficulty": "beginner", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Western Europe", "North America", "Middle East"], "description": "Trailing vine with thick waxy leaves and porcelain-like flowers.", "image": "photos/22.jpg"}, {"id": 23, "name": "Air Plant", "nameLat": "Tillandsia", "difficulty": "intermediate", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Soak in water weekly", "regions": ["Western Europe", "North America"], "description": "Epiphytic plant that requires no soil to grow.", "image": "photos/23.jpg"}, {"id": 24, "name": "Chinese Money Plant", "nameLat": "Pilea peperomioides", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Whimsical round coin-shaped flat leaves on slender stems.", "image": "photos/24.jpg"}, {"id": 25, "name": "Weeping Fig", "nameLat": "Ficus benjamina", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect", "direct-high"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 10 days", "regions": ["Middle East", "Western Europe", "North America"], "description": "Graceful indoor tree with delicate cascading branches.", "image": "photos/25.jpg"}, {"id": 26, "name": "Philodendron Birkin", "nameLat": "Philodendron Birkin", "difficulty": "intermediate", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "When soil is partly dry", "regions": ["Western Europe", "North America"], "description": "Striking dark green leaves accented with crisp white pinstripes.", "image": "photos/26.jpg"}, {"id": 27, "name": "Areca Palm", "nameLat": "Dypsis lutescens", "difficulty": "intermediate", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Middle East", "North America"], "description": "Feathery fronds that bring a bright, coastal vibe indoors.", "image": "photos/27.jpg"}, {"id": 28, "name": "Dieffenbachia", "nameLat": "Dieffenbachia", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 1-1.5 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Large, cream-and-green variegated leaves (Dumb Cane).", "image": "photos/28.jpg"}, {"id": 29, "name": "Ponytail Palm", "nameLat": "Beaucarnea recurvata", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["direct-high", "indirect"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Swollen trunk base storing water with long cascading ribbon leaves.", "image": "photos/29.jpg"}, {"id": 30, "name": "Calathea Orbifolia", "nameLat": "Calathea orbifolia", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep moist", "regions": ["Western Europe", "North America"], "description": "Stunning large round leaves with silver stripes.", "image": "photos/30.jpg"}, {"id": 31, "name": "Silver Satin Pothos", "nameLat": "Scindapsus pictus", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 1.5 weeks", "regions": ["Western Europe", "North America"], "description": "Vining plant with velvety green leaves splashed in silver.", "image": "photos/31.jpg"}, {"id": 32, "name": "Parlor Palm", "nameLat": "Chamaedorea elegans", "difficulty": "beginner", "directions": ["north", "east", "west", "dark"], "light": ["indirect", "shade"], "petFriendly": true, "rareWater": false, "waterFreq": "Every 1-2 weeks", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Classic compact palm thriving in modest indoor light.", "image": "photos/32.jpg"}, {"id": 33, "name": "Norfolk Island Pine", "nameLat": "Araucaria heterophylla", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Miniature evergreen tree resembling a tiny Christmas pine.", "image": "photos/33.jpg"}, {"id": 34, "name": "African Violet", "nameLat": "Saintpaulia", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "When soil surface dries", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Beloved indoor bloomer with velvety leaves and purple flowers.", "image": "photos/34.jpg"}, {"id": 35, "name": "Polka Dot Plant", "nameLat": "Hypoestes phyllostachya", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every 5-7 days", "regions": ["Western Europe", "North America"], "description": "Lively foliage speckled heavily with bright pink spots.", "image": "photos/35.jpg"}, {"id": 36, "name": "Sago Palm", "nameLat": "Cycas revoluta", "difficulty": "intermediate", "directions": ["south", "east"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 2-3 weeks", "regions": ["Middle East", "North America"], "description": "Stiff, symmetrical dark green fronds radiating from a thick trunk.", "image": "photos/36.jpg"}, {"id": 37, "name": "Burro's Tail", "nameLat": "Sedum morganianum", "difficulty": "intermediate", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Trailing succulent with plump, overlapping blue-green bead leaves.", "image": "photos/37.jpg"}, {"id": 38, "name": "Panda Plant", "nameLat": "Kalanchoe tomentosa", "difficulty": "beginner", "directions": ["south", "east"], "light": ["direct-high", "indirect"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Fuzzy, silver-gray succulent leaves tipped with brown velvet.", "image": "photos/38.jpg"}, {"id": 39, "name": "Flamingo Flower", "nameLat": "Anthurium andraeanum", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Glossy green leaves accompanied by bright red waxy heart flowers.", "image": "photos/39.jpg"}, {"id": 40, "name": "Cebu Blue Pothos", "nameLat": "Epipremnum pinnatum 'Cebu Blue'", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 1.5 weeks", "regions": ["Western Europe", "North America"], "description": "Unique silvery-blue metallic leaves on a trailing vine.", "image": "photos/40.jpg"}, {"id": 41, "name": "Rabbit's Foot Fern", "nameLat": "Davallia fejeensis", "difficulty": "intermediate", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep evenly moist", "regions": ["Western Europe", "North America"], "description": "Unique fuzzy brown rhizomes crawling over the pot rim.", "image": "photos/41.jpg"}, {"id": 42, "name": "Staghorn Fern", "nameLat": "Platycerium bifurcatum", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Weekly soak", "regions": ["Western Europe", "North America"], "description": "Fascinating sculptural epiphyte with antler-like fronds.", "image": "photos/42.jpg"}, {"id": 43, "name": "String of Pearls", "nameLat": "Senecio rowleyanus", "difficulty": "intermediate", "directions": ["south", "east", "west"], "light": ["direct-high", "indirect"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 2-3 weeks", "regions": ["Western Europe", "North America"], "description": "Delicate trailing strands of spherical green bead leaves.", "image": "photos/43.jpg"}, {"id": 44, "name": "String of Hearts", "nameLat": "Ceropegia woodii", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["indirect", "direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 2-3 weeks", "regions": ["Western Europe", "North America"], "description": "Delicate trailing vine with miniature purple-backed heart leaves.", "image": "photos/44.jpg"}, {"id": 45, "name": "Hoya Kerrii", "nameLat": "Hoya kerrii", "difficulty": "beginner", "directions": ["south", "east"], "light": ["direct-high", "indirect"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Western Europe", "North America"], "description": "Popular single-leaf succulent shaped like a natural green heart.", "image": "photos/45.jpg"}, {"id": 46, "name": "Bromeliad", "nameLat": "Guzmania", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Fill central cup weekly", "regions": ["Western Europe", "North America"], "description": "Tropical plant featuring a vibrant central colored bract flower.", "image": "photos/46.jpg"}, {"id": 47, "name": "Castor Bean Houseplant", "nameLat": "Fatsia japonica", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect", "shade"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Glossy, tropical-looking palmate leaves that handle cooler rooms.", "image": "photos/47.jpg"}, {"id": 48, "name": "Money Tree", "nameLat": "Pachira aquatica", "difficulty": "beginner", "directions": ["east", "west", "south"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every 1.5 weeks", "regions": ["Middle East", "North America", "Western Europe"], "description": "Braided woody trunk topped with bright green umbrella leaves.", "image": "photos/48.jpg"}, {"id": 49, "name": "Schefflera (Umbrella Tree)", "nameLat": "Schefflera arboricola", "difficulty": "beginner", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 10 days", "regions": ["Middle East", "Western Europe", "North America"], "description": "Glossy leaflets radiating outwards like miniature umbrellas.", "image": "photos/49.jpg"}, {"id": 50, "name": "Calathea Medallion", "nameLat": "Calathea 'Medallion'", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep moist", "regions": ["Western Europe", "North America"], "description": "Round patterned leaves with dark green and purple brush strokes.", "image": "photos/50.jpg"}, {"id": 51, "name": "Calathea Rattlesnake", "nameLat": "Calathea lancifolia", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep moist", "regions": ["Western Europe", "North America"], "description": "Wavy, elongated leaves with bold dark green spots and purple undersides.", "image": "photos/51.jpg"}, {"id": 52, "name": "Calathea White Fusion", "nameLat": "Calathea 'White Fusion'", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep moist", "regions": ["Western Europe", "North America"], "description": "Exquisite variegation featuring white, green, and lavender tones.", "image": "photos/52.jpg"}, {"id": 53, "name": "Philodendron Pink Princess", "nameLat": "Philodendron erubescens 'Pink Princess'", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Dark green leaves splashed with striking bubblegum pink variegation.", "image": "photos/53.jpg"}, {"id": 54, "name": "Philodendron White Wizard", "nameLat": "Philodendron 'White Wizard'", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Climbing climber featuring clean white sectoral variegation.", "image": "photos/54.jpg"}, {"id": 55, "name": "Philodendron Micans", "nameLat": "Philodendron hederaceum var. micans", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Trailing velvet-textured leaves that shimmer in bronze and green.", "image": "photos/55.jpg"}, {"id": 56, "name": "Philodendron Brasil", "nameLat": "Philodendron hederaceum 'Brasil'", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Vibrant trailing leaves striped with lime green and yellow.", "image": "photos/56.jpg"}, {"id": 57, "name": "Philodendron Xanadu", "nameLat": "Philodendron 'Xanadu'", "difficulty": "beginner", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 10 days", "regions": ["Middle East", "Western Europe", "North America"], "description": "Compact, self-heading plant with deeply lobed, lush green leaves.", "image": "photos/57.jpg"}, {"id": 58, "name": "Monstera Adansonii", "nameLat": "Monstera adansonii", "difficulty": "beginner", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Swiss cheese vine with natural oval holes carved into the leaves.", "image": "photos/58.jpg"}, {"id": 59, "name": "Monstera Albo Variegata", "nameLat": "Monstera deliciosa 'Albo Variegata'", "difficulty": "expert", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "When top 2 inches are dry", "regions": ["Western Europe", "North America"], "description": "Collector's dream featuring breathtaking natural white marbling.", "image": "photos/59.jpg"}, {"id": 60, "name": "Epiphyllum Anguliger", "nameLat": "Epiphyllum anguliger", "difficulty": "intermediate", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Western Europe", "North America"], "description": "Fishbone cactus with zigzag stems and fragrant night flowers.", "image": "photos/60.jpg"}, {"id": 61, "name": "Christmas Cactus", "nameLat": "Schlumbergera bridgesii", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every 1.5 weeks", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Flat segmented stems producing winter blooms in pink or red.", "image": "photos/61.jpg"}, {"id": 62, "name": "Paddle Plant", "nameLat": "Kalanchoe thyrsiflora", "difficulty": "beginner", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Large, flat, rounded succulent leaves tinted with red margins.", "image": "photos/62.jpg"}, {"id": 63, "name": "Echeveria Elegans", "nameLat": "Echeveria elegans", "difficulty": "beginner", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Symmetrical pastel rosette succulent resembling an open stone rose.", "image": "photos/63.jpg"}, {"id": 64, "name": "Black Rose Aeonium", "nameLat": "Aeonium arboreum 'Zwartkop'", "difficulty": "intermediate", "directions": ["south", "east"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Dramatic dark purple, almost black rosettes atop woody stems.", "image": "photos/64.jpg"}, {"id": 65, "name": "Crown of Thorns", "nameLat": "Euphorbia milii", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Woody stems armed with thorns and long-lasting bright bract flowers.", "image": "photos/65.jpg"}, {"id": 66, "name": "Split Rock", "nameLat": "Pleiospilos nelii", "difficulty": "expert", "directions": ["south"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 4 weeks", "regions": ["Middle East", "North America"], "description": "Unique mimicry succulent looking like a cracked stone pebble.", "image": "photos/66.jpg"}, {"id": 67, "name": "Living Stones", "nameLat": "Lithops", "difficulty": "expert", "directions": ["south"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Monthly (careful with rot)", "regions": ["Middle East", "North America"], "description": "Tiny pebble-like succulents that emerge from the soil in pairs.", "image": "photos/67.jpg"}, {"id": 68, "name": "Barrel Cactus", "nameLat": "Echinocactus grusonii", "difficulty": "beginner", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 4 weeks", "regions": ["Middle East", "North America"], "description": "Globe-shaped golden-spined desert barrel cactus.", "image": "photos/68.jpg"}, {"id": 69, "name": "Prickly Pear", "nameLat": "Opuntia microdasys", "difficulty": "beginner", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Flat pad cactus studded with neat polka-dot clusters of golden glochids.", "image": "photos/69.jpg"}, {"id": 70, "name": "African Mask Plant", "nameLat": "Alocasia amazonica", "difficulty": "expert", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "When topsoil dries", "regions": ["Western Europe", "North America"], "description": "Striking dark arrow leaves outlined with prominent white veins.", "image": "photos/70.jpg"}, {"id": 71, "name": "Alocasia Polly", "nameLat": "Alocasia 'Polly'", "difficulty": "expert", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "When topsoil dries", "regions": ["Western Europe", "North America"], "description": "Compact version of the elephant ear with deep green glossy shield leaves.", "image": "photos/71.jpg"}, {"id": 72, "name": "Alocasia Zebrina", "nameLat": "Alocasia zebrina", "difficulty": "expert", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "When topsoil dries", "regions": ["Western Europe", "North America"], "description": "Exotic tropical plant featuring wild zebra-striped stems.", "image": "photos/72.jpg"}, {"id": 73, "name": "Colocasia (Black Magic)", "nameLat": "Colocasia esculenta", "difficulty": "expert", "directions": ["east", "west", "south"], "light": ["indirect", "direct-high"], "petFriendly": false, "rareWater": false, "waterFreq": "Keep constantly moist", "regions": ["Western Europe", "North America"], "description": "Dramatic velvety black elephant ear leaves.", "image": "photos/73.jpg"}, {"id": 74, "name": "Banana Plant", "nameLat": "Musa acuminata", "difficulty": "intermediate", "directions": ["south", "east"], "light": ["direct-high"], "petFriendly": true, "rareWater": false, "waterFreq": "Every 5-7 days", "regions": ["Middle East", "North America"], "description": "Fast-growing indoor dwarf banana tree with paddle leaves.", "image": "photos/74.jpg"}, {"id": 75, "name": "Lemon Tree", "nameLat": "Citrus limon", "difficulty": "expert", "directions": ["south"], "light": ["direct-high"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Middle East", "Southern Europe", "North America"], "description": "Fragrant citrus tree producing edible fruit in sunny indoor spots.", "image": "photos/75.jpg"}, {"id": 76, "name": "Olive Tree", "nameLat": "Olea europaea", "difficulty": "intermediate", "directions": ["south"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Middle East", "Southern Europe", "North America"], "description": "Mediterranean woody tree with silver-green narrow foliage.", "image": "photos/76.jpg"}, {"id": 77, "name": "Madagascar Jasmine", "nameLat": "Stephanotis floribunda", "difficulty": "intermediate", "directions": ["east", "south"], "light": ["indirect", "direct-high"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Climbing vine with waxy, intensely fragrant white bridal bouquets.", "image": "photos/77.jpg"}, {"id": 78, "name": "Jasmine", "nameLat": "Jasminum polyanthum", "difficulty": "intermediate", "directions": ["south", "east"], "light": ["direct-high", "indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America", "Middle East"], "description": "Sweetly scented climbing vine packed with pink flower buds.", "image": "photos/78.jpg"}, {"id": 79, "name": "Gardenia", "nameLat": "Gardenia jasminoides", "difficulty": "expert", "directions": ["east", "south"], "light": ["indirect", "direct-high"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep moist", "regions": ["Western Europe", "North America"], "description": "Glossy dark foliage with heavily perfumed pristine white blossoms.", "image": "photos/79.jpg"}, {"id": 80, "name": "Cyclamen", "nameLat": "Cyclamen persicum", "difficulty": "intermediate", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Water from below weekly", "regions": ["Middle East", "Western Europe", "Eastern Europe"], "description": "Heart-shaped patterned leaves with butterfly-like upturned blooms.", "image": "photos/80.jpg"}, {"id": 81, "name": "Kalanchoe Blossfeldiana", "nameLat": "Kalanchoe blossfeldiana", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["direct-high", "indirect"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America"], "description": "Succulent perennial with clusters of vibrant colorful flower heads.", "image": "photos/81.jpg"}, {"id": 82, "name": "Poinsettia", "nameLat": "Euphorbia pulcherrima", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Holiday classic with brilliant red and green bract leaves.", "image": "photos/82.jpg"}, {"id": 83, "name": "Paperwhite Narcissus", "nameLat": "Narcissus papyraceus", "difficulty": "beginner", "directions": ["south", "east"], "light": ["direct-high", "indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "In water bowl", "regions": ["Middle East", "Western Europe", "North America"], "description": "Bulb flowers that bloom rapidly indoors during winter.", "image": "photos/83.jpg"}, {"id": 84, "name": "Hyacinth", "nameLat": "Hyacinthus orientalis", "difficulty": "beginner", "directions": ["east", "south"], "light": ["indirect", "direct-high"], "petFriendly": false, "rareWater": false, "waterFreq": "Keep soil moist", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Highly fragrant spring bulb flower forced indoors.", "image": "photos/84.jpg"}, {"id": 85, "name": "Amaryllis", "nameLat": "Hippeastrum", "difficulty": "beginner", "directions": ["south", "east"], "light": ["direct-high", "indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 1.5 weeks", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Produces massive trumpet-shaped showy blooms from a giant bulb.", "image": "photos/85.jpg"}, {"id": 86, "name": "Grape Ivy", "nameLat": "Cissus rhombifolia", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect", "shade"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Lush climbing vine featuring diamond-shaped leaflets.", "image": "photos/86.jpg"}, {"id": 87, "name": "Swedish Ivy", "nameLat": "Plectranthus verticillatus", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "When topsoil dries", "regions": ["Western Europe", "North America"], "description": "Easy-going trailing plant with scalloped green leaves.", "image": "photos/87.jpg"}, {"id": 88, "name": "Creeping Charlie", "nameLat": "Plectranthus nummularius", "difficulty": "beginner", "directions": ["north", "east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Trailing succulent-like stems with rounded crinkled leaves.", "image": "photos/88.jpg"}, {"id": 89, "name": "Purple Passion Plant", "nameLat": "Gynura aurantiaca", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Vibrant plant covered in soft purple velvet hairs.", "image": "photos/89.jpg"}, {"id": 90, "name": "Maidenhair Fern", "nameLat": "Adiantum", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect", "shade"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep constantly moist", "regions": ["Western Europe", "Eastern Europe", "North America"], "description": "Delicate fan-shaped leaflets on wiry black stems.", "image": "photos/90.jpg"}, {"id": 91, "name": "Bird's Nest Fern", "nameLat": "Asplenium nidus", "difficulty": "beginner", "directions": ["north", "east"], "light": ["indirect", "shade"], "petFriendly": true, "rareWater": false, "waterFreq": "Every week", "regions": ["Western Europe", "North America"], "description": "Apple-green glossy fronds forming a neat central rosette nest.", "image": "photos/91.jpg"}, {"id": 92, "name": "Blue Star Fern", "nameLat": "Phlebodium aureum", "difficulty": "intermediate", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Every 1.5 weeks", "regions": ["Western Europe", "North America"], "description": "Distinctive blue-green deeply lobed fronds.", "image": "photos/92.jpg"}, {"id": 93, "name": "Silver Dollar Vine", "nameLat": "Xerosicyos danguyi", "difficulty": "intermediate", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Madagascar climber featuring round coin-like succulent leaves.", "image": "photos/93.jpg"}, {"id": 94, "name": "African Spear", "nameLat": "Sansevieria cylindrica", "difficulty": "beginner", "directions": ["north", "south", "east", "west", "dark"], "light": ["direct-high", "indirect", "shade"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3-4 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Modern cylindrical spear-like leaves growing upright.", "image": "photos/94.jpg"}, {"id": 95, "name": "Dracaena Janet Craig", "nameLat": "Dracaena deremensis 'Janet Craig'", "difficulty": "beginner", "directions": ["north", "east", "west", "dark"], "light": ["indirect", "shade"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 2 weeks", "regions": ["Middle East", "Western Europe", "North America"], "description": "Dark solid green sword leaves that tolerate low office light.", "image": "photos/95.jpg"}, {"id": 96, "name": "Dracaena Lemon Lime", "nameLat": "Dracaena deremensis 'Lemon Lime'", "difficulty": "beginner", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 2 weeks", "regions": ["Western Europe", "North America"], "description": "Bright striped foliage in chartreuse and dark green.", "image": "photos/96.jpg"}, {"id": 97, "name": "Dracaena Reflexa", "nameLat": "Dracaena reflexa", "difficulty": "intermediate", "directions": ["east", "west"], "light": ["indirect"], "petFriendly": false, "rareWater": false, "waterFreq": "Every 10 days", "regions": ["Western Europe", "North America"], "description": "Song of India plant featuring twisting stems and yellow-striped leaves.", "image": "photos/97.jpg"}, {"id": 98, "name": "Yucca Palm", "nameLat": "Yucca aloifolia", "difficulty": "beginner", "directions": ["south", "east", "west"], "light": ["direct-high"], "petFriendly": false, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Stiff rosettes of razor-sharp leaves on stout tree-like trunks.", "image": "photos/98.jpg"}, {"id": 99, "name": "Beaucarnea stricta", "nameLat": "Beaucarnea stricta", "difficulty": "beginner", "directions": ["south", "west"], "light": ["direct-high"], "petFriendly": true, "rareWater": true, "waterFreq": "Every 3 weeks", "regions": ["Middle East", "North America"], "description": "Blue-hued variant of the ponytail palm with curly foliage.", "image": "photos/99.jpg"}, {"id": 100, "name": "Calathea Makoyana", "nameLat": "Calathea makoyana", "difficulty": "expert", "directions": ["north", "east"], "light": ["indirect"], "petFriendly": true, "rareWater": false, "waterFreq": "Keep moist", "regions": ["Western Europe", "North America"], "description": "Peacock plant featuring translucent feathered leaf patterns.", "image": "photos/100.jpg"}];
+    const STORAGE_KEY = "floramatch.v5";
+    const TOTAL_STEPS = 5;
+    const RAW_PLANTS = [{"id": 1, "name": "Snake Plant", "nameLat": "Sansevieria trifasciata", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Low to Bright Indirect (tolerates direct sun)", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid (adaptable)", "image": "photos/1.jpg"}, {"id": 2, "name": "ZZ Plant", "nameLat": "Zamioculcas zamiifolia", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Low to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid", "image": "photos/2.jpg"}, {"id": 3, "name": "Golden Pothos", "nameLat": "Epipremnum aureum", "regions": ["South America", "Asia", "Western Europe", "North America", "Middle East"], "light": "Low to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket", "Tabletop"], "humidity": "Humid", "image": "photos/3.jpg"}, {"id": 4, "name": "Monstera Deliciosa", "nameLat": "Monstera deliciosa", "regions": ["South America", "North America", "Western Europe", "Asia"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/4.jpg"}, {"id": 5, "name": "Heartleaf Philodendron", "nameLat": "Philodendron hederaceum", "regions": ["South America", "North America", "Western Europe", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Humid", "image": "photos/10.jpg"}, {"id": 6, "name": "Spider Plant", "nameLat": "Chlorophytum comosum", "regions": ["North America", "Western Europe", "Eastern Europe", "Asia", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Tabletop"], "humidity": "Moderate", "image": "photos/6.jpg"}, {"id": 7, "name": "Boston Fern", "nameLat": "Nephrolepis exaltata", "regions": ["North America", "South America", "Western Europe", "Asia"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket"], "humidity": "High humidity", "image": "photos/17.jpg"}, {"id": 8, "name": "English Ivy", "nameLat": "Hedera helix", "regions": ["Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Moderate to Humid", "image": "photos/18.jpg"}, {"id": 9, "name": "Peace Lily", "nameLat": "Spathiphyllum wallisii", "regions": ["Western Europe", "North America", "South America", "Asia", "Middle East"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot", "Tabletop"], "humidity": "Humid", "image": "photos/5.jpg"}, {"id": 10, "name": "Cast Iron Plant", "nameLat": "Aspidistra elatior", "regions": ["Asia", "Western Europe", "Eastern Europe", "North America"], "light": "Low Light / Shade", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid", "image": "photos/7.jpg"}, {"id": 11, "name": "Aloe Vera", "nameLat": "Aloe vera", "regions": ["Middle East", "North America", "Asia", "Western Europe"], "light": "Direct Sunlight", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Tabletop"], "humidity": "Dry air", "image": "photos/8.jpg"}, {"id": 12, "name": "Jade Plant", "nameLat": "Crassula ovata", "regions": ["Middle East", "Western Europe", "North America", "Asia"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Tabletop", "Floor pot"], "humidity": "Dry air", "image": "photos/9.jpg"}, {"id": 13, "name": "Prayer Plant", "nameLat": "Maranta leuconeura", "regions": ["South America", "North America", "Western Europe"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Hanging basket"], "humidity": "High humidity", "image": "photos/12.jpg"}, {"id": 14, "name": "Chinese Money Plant", "nameLat": "Pilea peperomioides", "regions": ["Asia", "Western Europe", "Eastern Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "Moderate", "image": "photos/24.jpg"}, {"id": 15, "name": "Norfolk Island Pine", "nameLat": "Araucaria heterophylla", "regions": ["Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/33.jpg"}, {"id": 16, "name": "Christmas Cactus", "nameLat": "Schlumbergera truncata", "regions": ["South America", "North America", "Western Europe", "Eastern Europe"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Trailing"], "humidity": "Moderate", "image": "photos/61.jpg"}, {"id": 17, "name": "Fiddle Leaf Fig", "nameLat": "Ficus lyrata", "regions": ["Western Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/11.jpg"}, {"id": 18, "name": "Weeping Fig", "nameLat": "Ficus benjamina", "regions": ["Asia", "Middle East", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/25.jpg"}, {"id": 19, "name": "Areca Palm", "nameLat": "Dypsis lutescens", "regions": ["Asia", "Middle East", "North America", "South America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/27.jpg"}, {"id": 20, "name": "Parlor Palm", "nameLat": "Chamaedorea elegans", "regions": ["Central America", "North America", "Western Europe", "Eastern Europe"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "Moderate", "image": "photos/32.jpg"}, {"id": 21, "name": "Corn Plant", "nameLat": "Dracaena fragrans", "regions": ["Africa", "Western Europe", "North America", "Middle East", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/95.jpg"}, {"id": 22, "name": "Dragon Tree", "nameLat": "Dracaena marginata", "regions": ["Africa", "Middle East", "Western Europe", "North America"], "light": "Bright Indirect to Direct", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Dry to moderate", "image": "photos/15.jpg"}, {"id": 23, "name": "Rubber Tree", "nameLat": "Ficus elastica", "regions": ["Asia", "Western Europe", "North America", "South America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/25.jpg"}, {"id": 24, "name": "Bamboo Palm", "nameLat": "Chamaedorea seifrizii", "regions": ["Central America", "North America", "Western Europe"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "High humidity", "image": "photos/32.jpg"}, {"id": 25, "name": "Polka Dot Plant", "nameLat": "Hypoestes phyllostachya", "regions": ["Africa", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/35.jpg"}, {"id": 26, "name": "Silver Satin Pothos", "nameLat": "Scindapsus pictus", "regions": ["Asia", "South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Humid", "image": "photos/31.jpg"}, {"id": 27, "name": "Swiss Cheese Plant", "nameLat": "Monstera adansonii", "regions": ["South America", "Central America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "High humidity", "image": "photos/58.jpg"}, {"id": 28, "name": "Zebra Plant", "nameLat": "Aphelandra squarrosa", "regions": ["South America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity"}, {"id": 29, "name": "African Violet", "nameLat": "Saintpaulia", "regions": ["Africa", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "Moderate", "image": "photos/34.jpg"}, {"id": 30, "name": "Bromeliad", "nameLat": "Guzmania", "regions": ["South America", "Central America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/46.jpg"}, {"id": 31, "name": "Bird's Nest Fern", "nameLat": "Asplenium nidus", "regions": ["Asia", "Australia", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/91.jpg"}, {"id": 32, "name": "Staghorn Fern", "nameLat": "Platycerium bifurcatum", "regions": ["Australia", "Asia", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Wall mount"], "humidity": "High humidity", "image": "photos/42.jpg"}, {"id": 33, "name": "String of Pearls", "nameLat": "Senecio rowleyanus", "regions": ["Africa", "Western Europe", "North America"], "light": "Bright Indirect to Direct", "difficulty": "Intermediate", "petFriendly": false, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Dry", "image": "photos/43.jpg"}, {"id": 34, "name": "String of Hearts", "nameLat": "Ceropegia woodii", "regions": ["Africa", "Western Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Dry to moderate", "image": "photos/44.jpg"}, {"id": 35, "name": "Wax Plant", "nameLat": "Hoya carnosa", "regions": ["Asia", "Australia", "Western Europe", "North America", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Trailing", "Hanging basket"], "humidity": "Moderate", "image": "photos/22.jpg"}, {"id": 36, "name": "Ponytail Palm", "nameLat": "Beaucarnea recurvata", "regions": ["North America", "Middle East", "Western Europe", "Asia"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry air", "image": "photos/29.jpg"}, {"id": 37, "name": "Yucca Cane", "nameLat": "Yucca elephantipes", "regions": ["North America", "Middle East", "Western Europe"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Dry air", "image": "photos/16.jpg"}, {"id": 38, "name": "Hens and Chicks", "nameLat": "Sempervivum tectorum", "regions": ["Western Europe", "Eastern Europe", "North America"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Tabletop"], "humidity": "Dry air", "image": "photos/63.jpg"}, {"id": 39, "name": "Burro's Tail", "nameLat": "Sedum morganianum", "regions": ["North America", "Western Europe", "Asia"], "light": "Bright Direct Sun", "difficulty": "Intermediate", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket"], "humidity": "Dry air", "image": "photos/37.jpg"}, {"id": 40, "name": "Flamingo Flower", "nameLat": "Anthurium andraeanum", "regions": ["South America", "Western Europe", "North America", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/39.jpg"}, {"id": 41, "name": "Calathea Orbifolia", "nameLat": "Calathea orbifolia", "regions": ["South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/30.jpg"}, {"id": 42, "name": "Calathea Medallion", "nameLat": "Calathea 'Medallion'", "regions": ["South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/50.jpg"}, {"id": 43, "name": "Alocasia Polly", "nameLat": "Alocasia 'Polly'", "regions": ["Asia", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": false, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/71.jpg"}, {"id": 44, "name": "Money Tree", "nameLat": "Pachira aquatica", "regions": ["Central America", "South America", "North America", "Western Europe", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/48.jpg"}, {"id": 45, "name": "Schefflera", "nameLat": "Schefflera arboricola", "regions": ["Asia", "Western Europe", "North America", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/49.jpg"}, {"id": 46, "name": "Syngonium", "nameLat": "Syngonium podophyllum", "regions": ["Central America", "South America", "Western Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Tabletop"], "humidity": "Humid", "image": "photos/13.jpg"}, {"id": 47, "name": "Chinese Evergreen", "nameLat": "Aglaonema", "regions": ["Asia", "Western Europe", "North America", "Middle East"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "Moderate to Humid", "image": "photos/14.jpg"}, {"id": 48, "name": "Dieffenbachia", "nameLat": "Dieffenbachia", "regions": ["South America", "Central America", "Western Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/28.jpg"}, {"id": 49, "name": "Air Plant", "nameLat": "Tillandsia", "regions": ["Central America", "South America", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Hanging basket"], "humidity": "Moderate", "image": "photos/23.jpg"}, {"id": 50, "name": "Fishbone Cactus", "nameLat": "Epiphyllum anguliger", "regions": ["Central America", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Moderate", "image": "photos/60.jpg"}];
 
     const REGIONS = [
       { value: "Middle East", label: "Middle East", hint: "Hot, sunny, dry indoor air.", icon: "region-me" },
@@ -593,34 +593,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     ];
 
     const PLACEMENT_OPTIONS = [
-      { value: "tabletop", label: "Tabletop", hint: "Shelf or desk at eye level.", icon: "place-table" },
-      { value: "hanging", label: "Hanging", hint: "Basket from the ceiling.", icon: "place-hang" },
-      { value: "floor", label: "Floor pot", hint: "A tall statement plant.", icon: "place-floor" },
-      { value: "trailing", label: "Trailing", hint: "High shelf, trellis, or wall.", icon: "place-trail" },
+      { value: "Tabletop", label: "Tabletop", hint: "Shelf or desk at eye level.", icon: "place-table" },
+      { value: "Hanging basket", label: "Hanging", hint: "Basket from the ceiling.", icon: "place-hang" },
+      { value: "Floor pot", label: "Floor pot", hint: "A tall statement plant.", icon: "place-floor" },
+      { value: "Trailing", label: "Trailing", hint: "High shelf, trellis, or wall.", icon: "place-trail" },
     ];
 
     const CLIMATE_OPTIONS = [
       { value: "dry", label: "Dry air", hint: "AC, heating, arid rooms.", icon: "climate-dry" },
       { value: "humid", label: "Humid", hint: "Kitchen, bath, or steamy air.", icon: "climate-humid" },
-    ];
-
-    const DIRECTION_OPTIONS = [
-      { value: "north", label: "North", hint: "Soft, steady daylight.", icon: "dir-north" },
-      { value: "south", label: "South", hint: "Strong sun most of the day.", icon: "dir-south" },
-      { value: "east", label: "East", hint: "Gentle morning sun.", icon: "dir-east" },
-      { value: "west", label: "West", hint: "Warm afternoon sun.", icon: "dir-west" },
-      { value: "dark", label: "No window", hint: "Artificial light only.", icon: "dir-dark" },
-    ];
-
-    const LIGHT_OPTIONS = [
-      { value: "direct-high", label: "Direct sun", hint: "4+ hours on the leaves.", icon: "light-direct" },
-      { value: "indirect", label: "Indirect", hint: "Bright, no harsh rays.", icon: "light-indirect" },
-      { value: "shade", label: "Deep shade", hint: "A dim corner.", icon: "light-shade" },
-    ];
-
-    const DISTANCE_OPTIONS = [
-      { value: "window", label: "By the window", hint: "Sill or right beside it.", icon: "dist-window" },
-      { value: "far", label: "2 meters away", hint: "Mid-room or far wall.", icon: "dist-far" },
     ];
 
     const ROOM_PRESETS = [
@@ -645,40 +626,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       rareWater: null,
       placement: null,
       climate: null,
-      direction: null,
-      light: null,
-      distance: null,
     };
 
     function unique(list) {
       return list.filter(function (item, i) { return list.indexOf(item) === i; });
     }
 
-    function inferTraits(plant) {
-      const n = (plant.name + " " + plant.nameLat).toLowerCase();
-      const climate = [];
-      const placement = [];
-      if (plant.rareWater || /cactus|succulent|aloe|jade|snake|zz|yucca|lithops|echeveria|sedum|haworthia|aeonium|ponytail|beaucarnea|sansevieria|kalanchoe|opuntia|barrel|prickly|split rock|living stone|paddle|panda|burro|string of pearls|string of hearts|hoya kerrii|crown of thorns|olive|silver dollar/i.test(n)) {
-        climate.push("dry");
-      }
-      if (/fern|calathea|maranta|prayer|alocasia|colocasia|anthurium|gardenia|maidenhair|peace lily|bromeliad|orchid|cyclamen|hyacinth/i.test(n)) {
-        climate.push("humid");
-      }
-      if (!climate.length) climate.push("dry", "humid");
-
-      if (/pothos|ivy|string of|trailing|hoya|micans|brasil|adansonii|spider|grape ivy|swedish|creeping|burro|air plant|tillandsia|jasmine|stephanotis/i.test(n)) {
-        placement.push("trailing", "hanging");
-      }
-      if (/fern|hanging/i.test(n)) placement.push("hanging");
-      if (/palm|fig|monstera deliciosa|tree|yucca|strelitzia|bird of paradise|fiddle|banana|olive|lemon|schefflera|money tree|dracaena|dieffenbachia|areca|norfolk|sago|musa|citrus|alocasia|colocasia|xanadu|fatsia/i.test(n)) {
-        placement.push("floor");
-      }
-      placement.push("tabletop");
-      return { climate: unique(climate), placement: unique(placement) };
-    }
-
     const plantDatabase = RAW_PLANTS.map(function (plant) {
-      return Object.assign({}, plant, inferTraits(plant));
+      return Object.assign({}, plant, { difficulty: String(plant.difficulty || "beginner").toLowerCase() });
     });
 
     function uid() {
@@ -723,33 +678,38 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
     function regionMatches(plant, region) {
       if (!isAnswered(region)) return true;
-      if (plant.regions.indexOf(region) !== -1) return true;
-      if (region === "Western Europe" && plant.regions.indexOf("Southern Europe") !== -1) return true;
-      return false;
+      return plant.regions.indexOf(region) !== -1;
     }
 
-    function effectiveLights(form) {
-      if (!isAnswered(form.light)) return null;
-      if (form.distance !== "far") return [form.light];
-      if (form.light === "direct-high") return ["indirect", "shade"];
-      if (form.light === "indirect") return ["indirect", "shade"];
-      return ["shade"];
+    function humidityFits(humidity, climate) {
+      const h = String(humidity || "").toLowerCase();
+      if (!h) return true;
+      if (/adaptable|dry or humid/.test(h)) return true;
+      if (climate === "dry") return /dry|moderate/.test(h) && !/high humidity/.test(h);
+      if (climate === "humid") return /humid|moderate/.test(h);
+      return true;
+    }
+
+    function placementFits(plantPlacement, selected) {
+      if (!isAnswered(selected)) return true;
+      const expanded = selected.slice();
+      if (selected.indexOf("Hanging basket") !== -1) expanded.push("Wall mount");
+      return intersects(plantPlacement, expanded);
     }
 
     function regionBonus(plant, region) {
       if (!isAnswered(region)) return 0;
       if (region === "Middle East") return plant.rareWater ? 8 : 2;
-      if (region === "Western Europe") return (plant.light.indexOf("shade") !== -1 || plant.light.indexOf("indirect") !== -1) ? 6 : 1;
-      if (region === "Eastern Europe") return (plant.rareWater || plant.light.indexOf("shade") !== -1) ? 6 : 1;
+      const light = String(plant.light || "").toLowerCase();
+      if (region === "Western Europe") return /indirect|low|shade|medium/.test(light) ? 6 : 1;
+      if (region === "Eastern Europe") return (plant.rareWater || /low|shade/.test(light)) ? 6 : 1;
       return 3;
     }
 
-    function scorePlant(plant, form, lights) {
+    function scorePlant(plant, form) {
       let score = 40;
-      if (isAnswered(form.direction) && intersects(plant.directions, form.direction)) score += 18;
-      if (lights && intersects(plant.light, lights)) score += 18;
-      if (isAnswered(form.climate) && plant.climate.indexOf(form.climate) !== -1) score += 10;
-      if (isAnswered(form.placement) && intersects(plant.placement, form.placement)) score += 10;
+      if (isAnswered(form.climate) && humidityFits(plant.humidity, form.climate)) score += 12;
+      if (isAnswered(form.placement) && placementFits(plant.placement, form.placement)) score += 12;
       if (isAnswered(form.experience)) {
         const gap = DIFFICULTY_RANK[form.experience] - DIFFICULTY_RANK[plant.difficulty];
         if (gap === 0) score += 8;
@@ -761,21 +721,18 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     }
 
     function matchPlants(form) {
-      const lights = effectiveLights(form);
       const userLevel = isAnswered(form.experience) ? DIFFICULTY_RANK[form.experience] : null;
       const filtered = plantDatabase.filter(function (plant) {
         if (!regionMatches(plant, form.region)) return false;
-        if (isAnswered(form.direction) && !intersects(plant.directions, form.direction)) return false;
-        if (lights && !intersects(plant.light, lights)) return false;
         if (userLevel && DIFFICULTY_RANK[plant.difficulty] > userLevel) return false;
-        if (isAnswered(form.climate) && plant.climate.indexOf(form.climate) === -1) return false;
-        if (isAnswered(form.placement) && !intersects(plant.placement, form.placement)) return false;
+        if (isAnswered(form.climate) && !humidityFits(plant.humidity, form.climate)) return false;
+        if (isAnswered(form.placement) && !placementFits(plant.placement, form.placement)) return false;
         if (form.petFriendly === true && !plant.petFriendly) return false;
         if (form.rareWater === true && !plant.rareWater) return false;
         return true;
       });
       filtered.sort(function (a, b) {
-        return scorePlant(b, form, lights) - scorePlant(a, form, lights) || a.id - b.id;
+        return scorePlant(b, form) - scorePlant(a, form) || a.id - b.id;
       });
       return filtered.slice(0, 3);
     }
@@ -784,8 +741,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       const lines = ["FloraMatch — Top 3 recommended plants:", ""];
       plants.forEach(function (p, i) {
         lines.push((i + 1) + ". " + p.name + " — " + p.nameLat);
-        lines.push("   " + DIFFICULTY_LABEL[p.difficulty] + " | " + p.waterFreq + " | " + (p.petFriendly ? "Pet friendly" : "Toxic to pets"));
-        lines.push("   " + p.description);
+        lines.push("   " + DIFFICULTY_LABEL[p.difficulty] + " | " + p.light + " | " + (p.petFriendly ? "Pet friendly" : "Toxic to pets"));
+        lines.push("   Humidity: " + p.humidity);
         lines.push("");
       });
       return lines.join("\n").trim();
@@ -980,8 +937,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 ? html`<span className="hidden rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-800 ring-1 ring-emerald-200 sm:inline">Pet friendly</span>`
                 : html`<span className="hidden rounded-full bg-orange-50 px-2.5 py-1 text-xs font-semibold text-orange-800 ring-1 ring-orange-200 sm:inline">Toxic</span>`}
             </div>
-            <p className="podium-extra hidden text-sm text-charcoal/80 sm:block"><span className="font-semibold text-forest">Water: </span>${plant.waterFreq}</p>
-            <p className="podium-extra mt-auto hidden text-sm leading-6 text-charcoal/70 sm:block">${plant.description}</p>
+            <p className="podium-extra hidden text-sm text-charcoal/80 sm:block"><span className="font-semibold text-forest">Light: </span>${plant.light}</p>
+            <p className="podium-extra mt-auto hidden text-sm leading-6 text-charcoal/70 sm:block"><span className="font-semibold text-forest">Humidity: </span>${plant.humidity}</p>
           </div>
         </article>
       `;
@@ -1002,9 +959,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         if (step === 1) return isAnswered(form.experience);
         if (step === 3) return isAnswered(form.placement);
         if (step === 4) return isAnswered(form.climate);
-        if (step === 5) return isAnswered(form.direction);
-        if (step === 6) return isAnswered(form.light);
-        if (step === 7) return isAnswered(form.distance);
         return true;
       }
       function skipPatches() {
@@ -1013,9 +967,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         if (step === 2) return { petFriendly: null, rareWater: null };
         if (step === 3) return { placement: null };
         if (step === 4) return { climate: null };
-        if (step === 5) return { direction: null };
-        if (step === 6) return { light: null };
-        return { distance: null };
+        return {};
       }
       function goNext(e) {
         e.preventDefault();
@@ -1077,18 +1029,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         html`<div>
           <${SectionTitle} step="5" title="Indoor climate" subtitle="Is the room dry from AC/heat, or humid?" />
           <${OptionGrid} name="climate" options=${CLIMATE_OPTIONS} value=${form.climate} onChange=${function (v) { setField("climate", v); }} columns="grid grid-cols-2 gap-3" />
-        </div>`,
-        html`<div>
-          <${SectionTitle} step="6" title="Window direction" subtitle="Select every direction that applies. Skip if you are unsure — skipped answers are ignored." />
-          <${MultiSelectGrid} name="direction" options=${DIRECTION_OPTIONS} value=${form.direction} onChange=${function (v) { setField("direction", v); }} columns="grid grid-cols-2 gap-3 sm:grid-cols-3" />
-        </div>`,
-        html`<div>
-          <${SectionTitle} step="7" title="Light intensity" subtitle="A more specific question — skip if it is hard to judge." />
-          <${OptionGrid} name="light" options=${LIGHT_OPTIONS} value=${form.light} onChange=${function (v) { setField("light", v); }} columns="grid grid-cols-3 gap-3" />
-        </div>`,
-        html`<div>
-          <${SectionTitle} step="8" title="Distance from the window" subtitle="Where will the plant actually sit relative to the light?" />
-          <${OptionGrid} name="distance" options=${DISTANCE_OPTIONS} value=${form.distance} onChange=${function (v) { setField("distance", v); }} columns="grid grid-cols-2 gap-3" />
         </div>`
       ];
 
@@ -1100,7 +1040,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <span className="text-charcoal/50">${Math.round(((step + 1) / TOTAL_STEPS) * 100) + "%"}</span>
             </div>
             <div className="flex gap-1.5">
-              ${[0, 1, 2, 3, 4, 5, 6, 7].map(function (i) {
+              ${[0, 1, 2, 3, 4].map(function (i) {
                 return html`<div key=${i} className=${"progress-fill h-1.5 flex-1 rounded-full " + (i <= step ? "bg-forest" : "bg-sage-deep")}></div>`;
               })}
             </div>
@@ -1347,7 +1287,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-forest text-white shadow-md sm:h-12 sm:w-12 sm:rounded-3xl sm:shadow-lg"><${IconLeaf} className="h-5 w-5 sm:h-6 sm:w-6" /></span>
                 <span className="min-w-0">
                   <span className="block text-lg font-extrabold leading-none text-forest sm:text-xl">FloraMatch</span>
-                  <span className="header-tagline mt-1 hidden text-xs text-charcoal/60 sm:block">Indoor plant matching by light and climate</span>
+                  <span className="header-tagline mt-1 hidden text-xs text-charcoal/60 sm:block">Indoor plant matching by region and climate</span>
                 </span>
               </button>
               <nav className="grid grid-cols-3 gap-1.5 sm:flex sm:gap-2">
