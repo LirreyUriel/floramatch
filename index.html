@@ -250,7 +250,7 @@
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
-  <script defer src="/_vercel/insights/script.js"></script>
+  <script async src="/collect/script.js" data-endpoint="/collect" data-sdkn="@vercel/analytics" data-sdkv="1.5.0"></script>
 </head>
 <body class="text-charcoal leaf-pattern">
   <div id="root">
@@ -635,9 +635,21 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     const QUIZ_STEP_NAMES = ["Region", "Experience", "Preferences", "Placement", "Indoor climate"];
 
     function trackEvent(name, data) {
-      const payload = { name: name };
-      if (data) payload.data = data;
-      if (typeof window.va === "function") window.va("event", payload);
+      var body = {
+        o: location.href,
+        sv: "0.1.3",
+        sdkn: "@vercel/analytics",
+        sdkv: "1.5.0",
+        ts: Date.now(),
+        en: name
+      };
+      if (data) body.ed = data;
+      fetch("/collect/event", {
+        method: "POST",
+        keepalive: true,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      }).catch(function () {});
     }
 
     function unique(list) {

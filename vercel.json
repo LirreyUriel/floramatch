@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/collect/:match*",
+      "destination": "https://floramatch.online/_vercel/insights/:match*"
+    }
+  ]
+}
