@@ -246,46 +246,11 @@
       }
       .podium-card { box-shadow: 0 8px 20px rgba(61, 155, 116, 0.08); }
     }
-    .fm-log-panel {
-      position: fixed;
-      left: 0.75rem;
-      right: 0.75rem;
-      bottom: 0.75rem;
-      z-index: 80;
-      display: flex;
-      flex-direction: column;
-      max-height: 38vh;
-      overflow: hidden;
-      border-radius: 1.25rem;
-      background: #1B2A24;
-      color: #E8F5E9;
-      box-shadow: 0 18px 40px rgba(27, 42, 36, 0.35);
-    }
-    @media (min-width: 640px) {
-      .fm-log-panel {
-        left: auto;
-        right: 1rem;
-        bottom: 1rem;
-        width: 24rem;
-        max-height: 44vh;
-      }
-    }
-    .fm-log-panel.collapsed {
-      max-height: none;
-    }
-    .fm-log-list {
-      overflow-y: auto;
-      padding: 0.5rem 0.85rem 0.85rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 11px;
-      line-height: 1.45;
-    }
-    .fm-log-row + .fm-log-row { margin-top: 0.4rem; }
-    .fm-log-time { color: #5BB58A; margin-right: 0.4rem; }
-    @media (max-width: 639px) {
-      .has-fm-log { padding-bottom: 42vh; }
-    }
   </style>
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body class="text-charcoal leaf-pattern">
   <div id="root">
@@ -607,11 +572,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     }
 
     const html = htm.bind(React.createElement);
-    const { useState, useEffect, useRef } = React;
+    const { useState, useEffect } = React;
 
     const STORAGE_KEY = "floramatch.v5";
     const TOTAL_STEPS = 5;
-    const RAW_PLANTS = [{"id": 1, "name": "Snake Plant", "nameLat": "Sansevieria trifasciata", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Low to Bright Indirect (tolerates direct sun)", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid (adaptable)", "image": "photos/1.jpg"}, {"id": 2, "name": "ZZ Plant", "nameLat": "Zamioculcas zamiifolia", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Low to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid", "image": "photos/2.jpg"}, {"id": 3, "name": "Golden Pothos", "nameLat": "Epipremnum aureum", "regions": ["South America", "Asia", "Western Europe", "North America", "Middle East"], "light": "Low to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket", "Tabletop"], "humidity": "Humid", "image": "photos/3.jpg"}, {"id": 4, "name": "Monstera Deliciosa", "nameLat": "Monstera deliciosa", "regions": ["South America", "North America", "Western Europe", "Asia"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/4.jpg"}, {"id": 5, "name": "Heartleaf Philodendron", "nameLat": "Philodendron hederaceum", "regions": ["South America", "North America", "Western Europe", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Humid", "image": "photos/10.jpg"}, {"id": 6, "name": "Spider Plant", "nameLat": "Chlorophytum comosum", "regions": ["North America", "Western Europe", "Eastern Europe", "Asia", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Tabletop"], "humidity": "Moderate", "image": "photos/6.jpg"}, {"id": 7, "name": "Boston Fern", "nameLat": "Nephrolepis exaltata", "regions": ["North America", "South America", "Western Europe", "Asia"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket"], "humidity": "High humidity", "image": "photos/17.jpg"}, {"id": 8, "name": "English Ivy", "nameLat": "Hedera helix", "regions": ["Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Moderate to Humid", "image": "photos/18.jpg"}, {"id": 9, "name": "Peace Lily", "nameLat": "Spathiphyllum wallisii", "regions": ["Western Europe", "North America", "South America", "Asia", "Middle East"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot", "Tabletop"], "humidity": "Humid", "image": "photos/5.jpg"}, {"id": 10, "name": "Cast Iron Plant", "nameLat": "Aspidistra elatior", "regions": ["Asia", "Western Europe", "Eastern Europe", "North America"], "light": "Low Light / Shade", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid", "image": "photos/7.jpg"}, {"id": 11, "name": "Aloe Vera", "nameLat": "Aloe vera", "regions": ["Middle East", "North America", "Asia", "Western Europe"], "light": "Direct Sunlight", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Tabletop"], "humidity": "Dry air", "image": "photos/8.jpg"}, {"id": 12, "name": "Jade Plant", "nameLat": "Crassula ovata", "regions": ["Middle East", "Western Europe", "North America", "Asia"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Tabletop", "Floor pot"], "humidity": "Dry air", "image": "photos/9.jpg"}, {"id": 13, "name": "Prayer Plant", "nameLat": "Maranta leuconeura", "regions": ["South America", "North America", "Western Europe"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Hanging basket"], "humidity": "High humidity", "image": "photos/12.jpg"}, {"id": 14, "name": "Chinese Money Plant", "nameLat": "Pilea peperomioides", "regions": ["Asia", "Western Europe", "Eastern Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "Moderate", "image": "photos/24.jpg"}, {"id": 15, "name": "Norfolk Island Pine", "nameLat": "Araucaria heterophylla", "regions": ["Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/33.jpg"}, {"id": 16, "name": "Christmas Cactus", "nameLat": "Schlumbergera truncata", "regions": ["South America", "North America", "Western Europe", "Eastern Europe"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Trailing"], "humidity": "Moderate", "image": "photos/61.jpg"}, {"id": 17, "name": "Fiddle Leaf Fig", "nameLat": "Ficus lyrata", "regions": ["Western Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/11.jpg"}, {"id": 18, "name": "Weeping Fig", "nameLat": "Ficus benjamina", "regions": ["Asia", "Middle East", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/25.jpg"}, {"id": 19, "name": "Areca Palm", "nameLat": "Dypsis lutescens", "regions": ["Asia", "Middle East", "North America", "South America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/27.jpg"}, {"id": 20, "name": "Parlor Palm", "nameLat": "Chamaedorea elegans", "regions": ["Central America", "North America", "Western Europe", "Eastern Europe"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "Moderate", "image": "photos/32.jpg"}, {"id": 21, "name": "Corn Plant", "nameLat": "Dracaena fragrans", "regions": ["Africa", "Western Europe", "North America", "Middle East", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/95.jpg"}, {"id": 22, "name": "Dragon Tree", "nameLat": "Dracaena marginata", "regions": ["Africa", "Middle East", "Western Europe", "North America"], "light": "Bright Indirect to Direct", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Dry to moderate", "image": "photos/15.jpg"}, {"id": 23, "name": "Rubber Tree", "nameLat": "Ficus elastica", "regions": ["Asia", "Western Europe", "North America", "South America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/25.jpg"}, {"id": 24, "name": "Bamboo Palm", "nameLat": "Chamaedorea seifrizii", "regions": ["Central America", "North America", "Western Europe"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "High humidity", "image": "photos/32.jpg"}, {"id": 25, "name": "Polka Dot Plant", "nameLat": "Hypoestes phyllostachya", "regions": ["Africa", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/35.jpg"}, {"id": 26, "name": "Silver Satin Pothos", "nameLat": "Scindapsus pictus", "regions": ["Asia", "South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Humid", "image": "photos/31.jpg"}, {"id": 27, "name": "Swiss Cheese Plant", "nameLat": "Monstera adansonii", "regions": ["South America", "Central America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "High humidity", "image": "photos/58.jpg"}, {"id": 28, "name": "Zebra Plant", "nameLat": "Aphelandra squarrosa", "regions": ["South America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity"}, {"id": 29, "name": "African Violet", "nameLat": "Saintpaulia", "regions": ["Africa", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "Moderate", "image": "photos/34.jpg"}, {"id": 30, "name": "Bromeliad", "nameLat": "Guzmania", "regions": ["South America", "Central America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/46.jpg"}, {"id": 31, "name": "Bird's Nest Fern", "nameLat": "Asplenium nidus", "regions": ["Asia", "Australia", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/91.jpg"}, {"id": 32, "name": "Staghorn Fern", "nameLat": "Platycerium bifurcatum", "regions": ["Australia", "Asia", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Wall mount"], "humidity": "High humidity", "image": "photos/42.jpg"}, {"id": 33, "name": "String of Pearls", "nameLat": "Senecio rowleyanus", "regions": ["Africa", "Western Europe", "North America"], "light": "Bright Indirect to Direct", "difficulty": "Intermediate", "petFriendly": false, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Dry", "image": "photos/43.jpg"}, {"id": 34, "name": "String of Hearts", "nameLat": "Ceropegia woodii", "regions": ["Africa", "Western Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Dry to moderate", "image": "photos/44.jpg"}, {"id": 35, "name": "Wax Plant", "nameLat": "Hoya carnosa", "regions": ["Asia", "Australia", "Western Europe", "North America", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Trailing", "Hanging basket"], "humidity": "Moderate", "image": "photos/22.jpg"}, {"id": 36, "name": "Ponytail Palm", "nameLat": "Beaucarnea recurvata", "regions": ["North America", "Middle East", "Western Europe", "Asia"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry air", "image": "photos/29.jpg"}, {"id": 37, "name": "Yucca Cane", "nameLat": "Yucca elephantipes", "regions": ["North America", "Middle East", "Western Europe"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Dry air", "image": "photos/16.jpg"}, {"id": 38, "name": "Hens and Chicks", "nameLat": "Sempervivum tectorum", "regions": ["Western Europe", "Eastern Europe", "North America"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Tabletop"], "humidity": "Dry air", "image": "photos/63.jpg"}, {"id": 39, "name": "Burro's Tail", "nameLat": "Sedum morganianum", "regions": ["North America", "Western Europe", "Asia"], "light": "Bright Direct Sun", "difficulty": "Intermediate", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket"], "humidity": "Dry air", "image": "photos/37.jpg"}, {"id": 40, "name": "Flamingo Flower", "nameLat": "Anthurium andraeanum", "regions": ["South America", "Western Europe", "North America", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/39.jpg"}, {"id": 41, "name": "Calathea Orbifolia", "nameLat": "Calathea orbifolia", "regions": ["South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/30.jpg"}, {"id": 42, "name": "Calathea Medallion", "nameLat": "Calathea 'Medallion'", "regions": ["South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/50.jpg"}, {"id": 43, "name": "Alocasia Polly", "nameLat": "Alocasia 'Polly'", "regions": ["Asia", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": false, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/71.jpg"}, {"id": 44, "name": "Money Tree", "nameLat": "Pachira aquatica", "regions": ["Central America", "South America", "North America", "Western Europe", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/48.jpg"}, {"id": 45, "name": "Schefflera", "nameLat": "Schefflera arboricola", "regions": ["Asia", "Western Europe", "North America", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/49.jpg"}, {"id": 46, "name": "Syngonium", "nameLat": "Syngonium podophyllum", "regions": ["Central America", "South America", "Western Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Tabletop"], "humidity": "Humid", "image": "photos/13.jpg"}, {"id": 47, "name": "Chinese Evergreen", "nameLat": "Aglaonema", "regions": ["Asia", "Western Europe", "North America", "Middle East"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "Moderate to Humid", "image": "photos/14.jpg"}, {"id": 48, "name": "Dieffenbachia", "nameLat": "Dieffenbachia", "regions": ["South America", "Central America", "Western Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/28.jpg"}, {"id": 49, "name": "Air Plant", "nameLat": "Tillandsia", "regions": ["Central America", "South America", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Hanging basket"], "humidity": "Moderate", "image": "photos/23.jpg"}, {"id": 50, "name": "Fishbone Cactus", "nameLat": "Epiphyllum anguliger", "regions": ["Central America", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Moderate", "image": "photos/60.jpg"}];
+    const RAW_PLANTS = [{"id": 1, "name": "Snake Plant", "nameLat": "Sansevieria trifasciata", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Low to Bright Indirect (tolerates direct sun)", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid (adaptable)", "image": "photos/1.jpg"}, {"id": 2, "name": "ZZ Plant", "nameLat": "Zamioculcas zamiifolia", "regions": ["Middle East", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Low to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid", "image": "photos/2.jpg"}, {"id": 3, "name": "Golden Pothos", "nameLat": "Epipremnum aureum", "regions": ["South America", "Asia", "Western Europe", "North America", "Middle East"], "light": "Low to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket", "Tabletop"], "humidity": "Humid", "image": "photos/3.jpg"}, {"id": 4, "name": "Monstera Deliciosa", "nameLat": "Monstera deliciosa", "regions": ["South America", "North America", "Western Europe", "Asia"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/4.jpg"}, {"id": 5, "name": "Heartleaf Philodendron", "nameLat": "Philodendron hederaceum", "regions": ["South America", "North America", "Western Europe", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Humid", "image": "photos/10.jpg"}, {"id": 6, "name": "Spider Plant", "nameLat": "Chlorophytum comosum", "regions": ["North America", "Western Europe", "Eastern Europe", "Asia", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Tabletop"], "humidity": "Moderate", "image": "photos/6.jpg"}, {"id": 7, "name": "Boston Fern", "nameLat": "Nephrolepis exaltata", "regions": ["North America", "South America", "Western Europe", "Asia"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket"], "humidity": "High humidity", "image": "photos/17.jpg"}, {"id": 8, "name": "English Ivy", "nameLat": "Hedera helix", "regions": ["Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Moderate to Humid", "image": "photos/18.jpg"}, {"id": 9, "name": "Peace Lily", "nameLat": "Spathiphyllum wallisii", "regions": ["Western Europe", "North America", "South America", "Asia", "Middle East"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot", "Tabletop"], "humidity": "Humid", "image": "photos/5.jpg"}, {"id": 10, "name": "Cast Iron Plant", "nameLat": "Aspidistra elatior", "regions": ["Asia", "Western Europe", "Eastern Europe", "North America"], "light": "Low Light / Shade", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry or humid", "image": "photos/7.jpg"}, {"id": 11, "name": "Aloe Vera", "nameLat": "Aloe vera", "regions": ["Middle East", "North America", "Asia", "Western Europe"], "light": "Direct Sunlight", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Tabletop"], "humidity": "Dry air", "image": "photos/8.jpg"}, {"id": 12, "name": "Jade Plant", "nameLat": "Crassula ovata", "regions": ["Middle East", "Western Europe", "North America", "Asia"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Tabletop", "Floor pot"], "humidity": "Dry air", "image": "photos/9.jpg"}, {"id": 13, "name": "Prayer Plant", "nameLat": "Maranta leuconeura", "regions": ["South America", "North America", "Western Europe"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Hanging basket"], "humidity": "High humidity", "image": "photos/12.jpg"}, {"id": 14, "name": "Chinese Money Plant", "nameLat": "Pilea peperomioides", "regions": ["Asia", "Western Europe", "Eastern Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "Moderate", "image": "photos/24.jpg"}, {"id": 15, "name": "Norfolk Island Pine", "nameLat": "Araucaria heterophylla", "regions": ["Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/33.jpg"}, {"id": 16, "name": "Christmas Cactus", "nameLat": "Schlumbergera truncata", "regions": ["South America", "North America", "Western Europe", "Eastern Europe"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Trailing"], "humidity": "Moderate", "image": "photos/61.jpg"}, {"id": 17, "name": "Fiddle Leaf Fig", "nameLat": "Ficus lyrata", "regions": ["Western Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/11.jpg"}, {"id": 18, "name": "Weeping Fig", "nameLat": "Ficus benjamina", "regions": ["Asia", "Middle East", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/25.jpg"}, {"id": 19, "name": "Areca Palm", "nameLat": "Dypsis lutescens", "regions": ["Asia", "Middle East", "North America", "South America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/27.jpg"}, {"id": 20, "name": "Parlor Palm", "nameLat": "Chamaedorea elegans", "regions": ["Central America", "North America", "Western Europe", "Eastern Europe"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "Moderate", "image": "photos/32.jpg"}, {"id": 21, "name": "Corn Plant", "nameLat": "Dracaena fragrans", "regions": ["Africa", "Western Europe", "North America", "Middle East", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/95.jpg"}, {"id": 22, "name": "Dragon Tree", "nameLat": "Dracaena marginata", "regions": ["Africa", "Middle East", "Western Europe", "North America"], "light": "Bright Indirect to Direct", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Dry to moderate", "image": "photos/15.jpg"}, {"id": 23, "name": "Rubber Tree", "nameLat": "Ficus elastica", "regions": ["Asia", "Western Europe", "North America", "South America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/25.jpg"}, {"id": 24, "name": "Bamboo Palm", "nameLat": "Chamaedorea seifrizii", "regions": ["Central America", "North America", "Western Europe"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "High humidity", "image": "photos/32.jpg"}, {"id": 25, "name": "Polka Dot Plant", "nameLat": "Hypoestes phyllostachya", "regions": ["Africa", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/35.jpg"}, {"id": 26, "name": "Silver Satin Pothos", "nameLat": "Scindapsus pictus", "regions": ["Asia", "South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "Humid", "image": "photos/31.jpg"}, {"id": 27, "name": "Swiss Cheese Plant", "nameLat": "Monstera adansonii", "regions": ["South America", "Central America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Hanging basket"], "humidity": "High humidity", "image": "photos/58.jpg"}, {"id": 28, "name": "Zebra Plant", "nameLat": "Aphelandra squarrosa", "regions": ["South America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/101.jpg"}, {"id": 29, "name": "African Violet", "nameLat": "Saintpaulia", "regions": ["Africa", "Western Europe", "Eastern Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "Moderate", "image": "photos/34.jpg"}, {"id": 30, "name": "Bromeliad", "nameLat": "Guzmania", "regions": ["South America", "Central America", "Western Europe", "North America"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/46.jpg"}, {"id": 31, "name": "Bird's Nest Fern", "nameLat": "Asplenium nidus", "regions": ["Asia", "Australia", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/91.jpg"}, {"id": 32, "name": "Staghorn Fern", "nameLat": "Platycerium bifurcatum", "regions": ["Australia", "Asia", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Hanging basket", "Wall mount"], "humidity": "High humidity", "image": "photos/42.jpg"}, {"id": 33, "name": "String of Pearls", "nameLat": "Senecio rowleyanus", "regions": ["Africa", "Western Europe", "North America"], "light": "Bright Indirect to Direct", "difficulty": "Intermediate", "petFriendly": false, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Dry", "image": "photos/43.jpg"}, {"id": 34, "name": "String of Hearts", "nameLat": "Ceropegia woodii", "regions": ["Africa", "Western Europe", "North America", "Asia"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Dry to moderate", "image": "photos/44.jpg"}, {"id": 35, "name": "Wax Plant", "nameLat": "Hoya carnosa", "regions": ["Asia", "Australia", "Western Europe", "North America", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Trailing", "Hanging basket"], "humidity": "Moderate", "image": "photos/22.jpg"}, {"id": 36, "name": "Ponytail Palm", "nameLat": "Beaucarnea recurvata", "regions": ["North America", "Middle East", "Western Europe", "Asia"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Floor pot", "Tabletop"], "humidity": "Dry air", "image": "photos/29.jpg"}, {"id": 37, "name": "Yucca Cane", "nameLat": "Yucca elephantipes", "regions": ["North America", "Middle East", "Western Europe"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": false, "rareWater": true, "placement": ["Floor pot"], "humidity": "Dry air", "image": "photos/16.jpg"}, {"id": 38, "name": "Hens and Chicks", "nameLat": "Sempervivum tectorum", "regions": ["Western Europe", "Eastern Europe", "North America"], "light": "Bright Direct Sun", "difficulty": "Beginner", "petFriendly": true, "rareWater": true, "placement": ["Tabletop"], "humidity": "Dry air", "image": "photos/63.jpg"}, {"id": 39, "name": "Burro's Tail", "nameLat": "Sedum morganianum", "regions": ["North America", "Western Europe", "Asia"], "light": "Bright Direct Sun", "difficulty": "Intermediate", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket"], "humidity": "Dry air", "image": "photos/37.jpg"}, {"id": 40, "name": "Flamingo Flower", "nameLat": "Anthurium andraeanum", "regions": ["South America", "Western Europe", "North America", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Intermediate", "petFriendly": false, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/39.jpg"}, {"id": 41, "name": "Calathea Orbifolia", "nameLat": "Calathea orbifolia", "regions": ["South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/30.jpg"}, {"id": 42, "name": "Calathea Medallion", "nameLat": "Calathea 'Medallion'", "regions": ["South America", "Western Europe", "North America"], "light": "Medium Indirect", "difficulty": "Expert", "petFriendly": true, "rareWater": false, "placement": ["Tabletop"], "humidity": "High humidity", "image": "photos/50.jpg"}, {"id": 43, "name": "Alocasia Polly", "nameLat": "Alocasia 'Polly'", "regions": ["Asia", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Expert", "petFriendly": false, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "High humidity", "image": "photos/71.jpg"}, {"id": 44, "name": "Money Tree", "nameLat": "Pachira aquatica", "regions": ["Central America", "South America", "North America", "Western Europe", "Asia"], "light": "Medium to Bright Indirect", "difficulty": "Beginner", "petFriendly": true, "rareWater": false, "placement": ["Floor pot"], "humidity": "Humid", "image": "photos/48.jpg"}, {"id": 45, "name": "Schefflera", "nameLat": "Schefflera arboricola", "regions": ["Asia", "Western Europe", "North America", "Middle East"], "light": "Bright Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/49.jpg"}, {"id": 46, "name": "Syngonium", "nameLat": "Syngonium podophyllum", "regions": ["Central America", "South America", "Western Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Trailing", "Tabletop"], "humidity": "Humid", "image": "photos/13.jpg"}, {"id": 47, "name": "Chinese Evergreen", "nameLat": "Aglaonema", "regions": ["Asia", "Western Europe", "North America", "Middle East"], "light": "Low to Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Tabletop", "Floor pot"], "humidity": "Moderate to Humid", "image": "photos/14.jpg"}, {"id": 48, "name": "Dieffenbachia", "nameLat": "Dieffenbachia", "regions": ["South America", "Central America", "Western Europe", "North America", "Asia"], "light": "Medium Indirect", "difficulty": "Beginner", "petFriendly": false, "rareWater": false, "placement": ["Floor pot"], "humidity": "Moderate", "image": "photos/28.jpg"}, {"id": 49, "name": "Air Plant", "nameLat": "Tillandsia", "regions": ["Central America", "South America", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": false, "placement": ["Tabletop", "Hanging basket"], "humidity": "Moderate", "image": "photos/23.jpg"}, {"id": 50, "name": "Fishbone Cactus", "nameLat": "Epiphyllum anguliger", "regions": ["Central America", "North America", "Western Europe"], "light": "Bright Indirect", "difficulty": "Intermediate", "petFriendly": true, "rareWater": true, "placement": ["Hanging basket", "Trailing"], "humidity": "Moderate", "image": "photos/60.jpg"}];
 
     const REGIONS = [
       { value: "Middle East", label: "Middle East", hint: "Hot, sunny, dry indoor air.", icon: "region-me" },
@@ -669,28 +634,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
     const QUIZ_STEP_NAMES = ["Region", "Experience", "Preferences", "Placement", "Indoor climate"];
 
-    const fmLogEntries = [];
-    const fmLogListeners = [];
-
-    function fmLog(message, extra, opts) {
-      const silent = opts && opts.silent;
-      if (extra !== undefined) console.log("[FloraMatch] " + message, extra);
-      else console.log("[FloraMatch] " + message);
-      if (silent) return;
-      const now = new Date();
-      const stamp = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0") + ":" + String(now.getSeconds()).padStart(2, "0");
-      fmLogEntries.push({ id: now.getTime() + "-" + fmLogEntries.length, time: stamp, message: message });
-      if (fmLogEntries.length > 80) fmLogEntries.shift();
-      const snapshot = fmLogEntries.slice();
-      for (let i = 0; i < fmLogListeners.length; i++) fmLogListeners[i](snapshot);
-    }
-
-    function quizStepLabel(step) {
-      return "step " + (step + 1) + "/" + TOTAL_STEPS + " (" + (QUIZ_STEP_NAMES[step] || "unknown") + ")";
-    }
-
-    function plantNames(plants) {
-      return (plants || []).map(function (p) { return p.name; }).join(", ") || "(none)";
+    function trackEvent(name, data) {
+      const payload = { name: name };
+      if (data) payload.data = data;
+      if (typeof window.va === "function") window.va("event", payload);
     }
 
     function unique(list) {
@@ -712,35 +659,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     function readState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) {
-          fmLog("No saved state found. Starting with an empty quiz.");
-          return defaultState();
-        }
-        const parsed = Object.assign(defaultState(), JSON.parse(raw));
-        fmLog("Restored saved state.", {
-          screen: parsed.screen,
-          quizStep: (parsed.step || 0) + 1,
-          rooms: (parsed.rooms || []).length,
-          results: (parsed.results || []).length,
-        });
-        return parsed;
+        if (!raw) return defaultState();
+        return Object.assign(defaultState(), JSON.parse(raw));
       } catch (e) {
-        fmLog("Could not read saved state. Starting fresh.", e && e.message);
         return defaultState();
       }
     }
 
     function writeState(state) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        fmLog("Saved app state to localStorage.", {
-          screen: state.screen,
-          quizStep: (state.step || 0) + 1,
-          rooms: (state.rooms || []).length,
-        }, { silent: true });
-      } catch (e) {
-        fmLog("Could not write saved state.", e && e.message);
-      }
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
     }
 
     function isAnswered(value) {
@@ -883,16 +810,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       const failedState = useState(false);
       const failed = failedState[0];
       const setFailed = failedState[1];
-      useEffect(function () {
-        if (!props.src) fmLog("Plant photo missing for \"" + (props.alt || "unknown") + "\".", undefined, { silent: true });
-      }, [props.src, props.alt]);
       if (failed || !props.src) {
         return html`<div className="photo-fallback" aria-hidden="true"><${IconLeaf} className=${props.iconClass || "h-16 w-16 text-forest"} /></div>`;
       }
-      return html`<img src=${props.src} alt=${props.alt || ""} className="plant-photo" loading="lazy" referrerPolicy="no-referrer" onError=${function () {
-        fmLog("Plant photo failed to load: " + props.src + " (" + (props.alt || "unknown") + ").", undefined, { silent: true });
-        setFailed(true);
-      }} />`;
+      return html`<img src=${props.src} alt=${props.alt || ""} className="plant-photo" loading="lazy" referrerPolicy="no-referrer" onError=${function () { setFailed(true); }} />`;
     }
 
     function AnswerIcon(props) {
@@ -1007,52 +928,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       return html`<div className="toast-in fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-2xl bg-forest px-5 py-3 text-sm font-medium text-white shadow-lg">${props.message}</div>`;
     }
 
-    function LogPanel() {
-      const logsState = useState(fmLogEntries.slice());
-      const logs = logsState[0];
-      const setLogs = logsState[1];
-      const openState = useState(true);
-      const open = openState[0];
-      const setOpen = openState[1];
-      const listRef = useRef(null);
-      useEffect(function () {
-        function onLogs(next) { setLogs(next); }
-        fmLogListeners.push(onLogs);
-        return function () {
-          const i = fmLogListeners.indexOf(onLogs);
-          if (i !== -1) fmLogListeners.splice(i, 1);
-        };
-      }, []);
-      useEffect(function () {
-        const el = listRef.current;
-        if (el) el.scrollTop = el.scrollHeight;
-      }, [logs, open]);
-      return html`
-        <div className=${"fm-log-panel " + (open ? "" : "collapsed")} role="log" aria-live="polite" aria-label="Activity log">
-          <div className="flex items-center justify-between gap-2 px-3 py-2">
-            <p className="text-xs font-bold tracking-wide text-white">Activity log</p>
-            <div className="flex items-center gap-2">
-              <button type="button" className="text-[11px] font-semibold text-forest-light hover:text-white" onClick=${function () {
-                fmLogEntries.length = 0;
-                setLogs([]);
-                fmLog("Log cleared.");
-              }}>Clear</button>
-              <button type="button" className="rounded-lg bg-white/10 px-2 py-1 text-[11px] font-bold text-white hover:bg-white/20" onClick=${function () { setOpen(!open); }}>${open ? "Hide" : "Show"}</button>
-            </div>
-          </div>
-          ${open && html`
-            <div className="fm-log-list" ref=${listRef}>
-              ${logs.length === 0
-                ? html`<p className="text-white/50">No activity yet.</p>`
-                : logs.map(function (entry) {
-                    return html`<p key=${entry.id} className="fm-log-row"><span className="fm-log-time">${entry.time}</span><span>${entry.message}</span></p>`;
-                  })}
-            </div>
-          `}
-        </div>
-      `;
-    }
-
     function PodiumCard(props) {
       const plant = props.plant;
       const rank = props.rank;
@@ -1084,19 +959,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     function Questionnaire(props) {
       const form = props.form;
       const step = props.step;
-      useEffect(function () {
-        fmLog("Opened quiz " + quizStepLabel(step) + ".", {
-          region: form.region,
-          experience: form.experience,
-          petFriendly: form.petFriendly,
-          rareWater: form.rareWater,
-          placement: form.placement,
-          climate: form.climate,
-        });
-      }, [step]);
       function setField(key, value) {
-        const display = Array.isArray(value) ? (value.length ? value.join(", ") : "(none)") : String(value);
-        fmLog("Answered " + quizStepLabel(step) + " — " + key + ": " + display);
         const patch = {};
         patch[key] = value;
         props.onChangeForm(patch);
@@ -1121,29 +984,25 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       function goNext(e) {
         e.preventDefault();
         if (!currentAnswered()) {
-          fmLog("Next blocked on " + quizStepLabel(step) + ": no option chosen.");
           props.setError("Choose an option, or tap Skip so this question is ignored in matching.");
           return;
         }
         props.setError("");
         if (step < TOTAL_STEPS - 1) {
-          fmLog("Next from " + quizStepLabel(step) + " → " + quizStepLabel(step + 1) + ".");
+          trackEvent("Quiz Next", { step: step + 1, question: QUIZ_STEP_NAMES[step] });
           props.setStep(step + 1);
         } else {
-          fmLog("Submitted quiz from " + quizStepLabel(step) + ". Running match.");
+          trackEvent("Quiz Complete", { step: TOTAL_STEPS, question: QUIZ_STEP_NAMES[step] });
           props.onSubmit(null);
         }
       }
       function skipQuestion() {
         const skipped = skipPatches();
-        const keys = Object.keys(skipped).join(", ");
-        fmLog("Skipped " + quizStepLabel(step) + ". Cleared: " + keys + ".");
         props.setError("");
         if (step < TOTAL_STEPS - 1) {
           props.onChangeForm(skipped);
           props.setStep(step + 1);
         } else {
-          fmLog("Skipped last step. Running match without that answer.");
           props.onSubmit(skipped);
         }
       }
@@ -1171,7 +1030,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                   checked=${on}
                   onChange=${function (e) {
                     const on = e.target.checked ? true : false;
-                    fmLog("Answered " + quizStepLabel(step) + " — " + opt.label + ": " + (on ? "yes" : "no") + ".");
                     const patch = {};
                     patch[opt.value] = on;
                     props.onChangeForm(patch);
@@ -1208,16 +1066,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <div key=${step} className="step-enter min-h-[200px] sm:min-h-[260px]">${questions[step]}</div>
           ${props.error && html`<p className="mt-4 rounded-3xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800 ring-1 ring-rose-200" role="alert">${props.error}</p>`}
           <div className="mt-5 flex gap-2 sm:mt-8 sm:gap-3">
-            <button type="button" onClick=${function () {
-              props.setError("");
-              if (step > 0) {
-                fmLog("Back from " + quizStepLabel(step) + " → " + quizStepLabel(step - 1) + ".");
-                props.setStep(step - 1);
-              } else if (props.onExit) {
-                fmLog("Back from first quiz step. Leaving the quiz.");
-                props.onExit();
-              }
-            }} className="rounded-2xl border-2 border-sage-deep bg-white px-3 py-2.5 text-sm font-semibold text-forest transition hover:bg-sage sm:rounded-3xl sm:px-5 sm:py-3">Back</button>
+            <button type="button" onClick=${function () { props.setError(""); if (step > 0) props.setStep(step - 1); else if (props.onExit) props.onExit(); }} className="rounded-2xl border-2 border-sage-deep bg-white px-3 py-2.5 text-sm font-semibold text-forest transition hover:bg-sage sm:rounded-3xl sm:px-5 sm:py-3">Back</button>
             <button type="button" onClick=${skipQuestion} className="rounded-2xl border-2 border-sage-deep bg-white px-3 py-2.5 text-sm font-semibold text-forest transition hover:bg-sage sm:rounded-3xl sm:px-5 sm:py-3">Skip</button>
             <button type="submit" className=${"flex-1 rounded-2xl bg-forest px-4 py-2.5 text-base font-bold text-white shadow-md transition hover:bg-forest-dark sm:rounded-3xl sm:px-6 sm:py-3 sm:text-lg " + (currentAnswered() ? "" : "opacity-50")}>
               ${step === TOTAL_STEPS - 1 ? "Results" : "Next"}
@@ -1233,11 +1082,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       const setName = nameState[1];
       function save(roomName) {
         const trimmed = (roomName || name).trim();
-        if (!trimmed) {
-          fmLog("Room save blocked: empty room name.");
-          return;
-        }
-        fmLog("Saving matches to room \"" + trimmed + "\".");
+        if (!trimmed) return;
         props.onSave(trimmed);
         setName("");
       }
@@ -1259,10 +1104,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <input value=${name} onInput=${function (e) { setName(e.target.value); }} placeholder="Another room" className="flex-1 rounded-2xl border-2 border-sage-deep px-4 py-2.5 text-sm outline-none focus:border-forest sm:py-3" />
             <button type="submit" className="rounded-2xl bg-forest px-4 py-2.5 text-sm font-bold text-white hover:bg-forest-dark sm:px-5 sm:py-3">Save</button>
           </form>
-          <button type="button" onClick=${function () {
-            fmLog("Dismissed save-to-room prompt. Matches were not saved.");
-            props.onDismiss();
-          }} className="mt-3 text-sm font-semibold text-charcoal/55 hover:text-forest">Not now</button>
+          <button type="button" onClick=${props.onDismiss} className="mt-3 text-sm font-semibold text-charcoal/55 hover:text-forest">Not now</button>
         </div>
       `;
     }
@@ -1310,7 +1152,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     function RoomsView(props) {
       const addCard = html`
         <button type="button" onClick=${function () {
-          fmLog("Add new room clicked. Starting a fresh quiz.");
+          trackEvent("Add New Room");
           props.onAdd();
         }} className="add-room-card fade-up rounded-3xl border-2 border-dashed border-forest/30 bg-white p-5 text-center shadow-lg ring-1 ring-forest/5">
           <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sage text-3xl font-light leading-none text-forest sm:h-16 sm:w-16 sm:text-4xl">+</span>
@@ -1349,10 +1191,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                         <p className="text-xs text-charcoal/50">${room.savedAt ? new Date(room.savedAt).toLocaleDateString() : ""}</p>
                       </div>
                     </div>
-                    <button type="button" onClick=${function () {
-                      fmLog("Delete room requested: \"" + room.name + "\" (id " + room.id + ").");
-                      props.onDelete(room.id);
-                    }} className="text-xs font-semibold text-rose-700 hover:underline">Delete</button>
+                    <button type="button" onClick=${function () { props.onDelete(room.id); }} className="text-xs font-semibold text-rose-700 hover:underline">Delete</button>
                   </div>
                   <div className="mt-3 flex gap-2 overflow-x-auto sm:mt-4">
                     ${(room.results || []).map(function (plant) {
@@ -1398,24 +1237,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
       useEffect(function () { writeState(appState); }, [appState]);
 
-      useEffect(function () {
-        fmLog("App ready.", {
-          screen: appState.screen,
-          quizStep: (appState.step || 0) + 1,
-          rooms: (appState.rooms || []).length,
-          plantsInDb: plantDatabase.length,
-        });
-      }, []);
-
       function patch(partial) {
-        if (partial.screen && partial.screen !== appState.screen) {
-          fmLog("Navigating to screen: " + partial.screen + ".", undefined, { silent: true });
-        }
         setAppState(function (prev) { return Object.assign({}, prev, partial); });
       }
 
       function changeForm(fields) {
-        fmLog("Quiz form updated.", fields, { silent: true });
         setAppState(function (prev) {
           return Object.assign({}, prev, { form: Object.assign({}, prev.form, fields) });
         });
@@ -1423,74 +1249,42 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
       function runMatch(relax, formPatch) {
         setError("");
-        fmLog(relax ? "Broadening search (dropping pet, watering, placement, and climate filters)." : "Running plant match.");
         setAppState(function (prev) {
           const form = formPatch ? Object.assign({}, prev.form, formPatch) : prev.form;
-          fmLog("Match filters.", form, { silent: true });
           let matches = matchPlants(form);
-          let usedRelax = false;
           if (relax && matches.length < 3) {
             const openForm = Object.assign({}, form, { petFriendly: null, rareWater: null, placement: null, climate: null });
             const wider = matchPlants(openForm);
-            if (wider.length > matches.length) {
-              matches = wider;
-              usedRelax = true;
-            }
-          }
-          if (matches.length) {
-            fmLog("Match complete: " + matches.length + " plant(s) — " + plantNames(matches) + (usedRelax ? " (broadened)." : "."));
-          } else {
-            fmLog("Match complete: no plants fit these answers.");
+            if (wider.length > matches.length) matches = wider;
           }
           return Object.assign({}, prev, { form: form, results: matches, screen: "results", savePromptOpen: matches.length > 0 });
         });
       }
 
-      function startFreshQuiz(source) {
+      function startFreshQuiz() {
         setError("");
-        fmLog("Starting a new quiz" + (source ? " (" + source + ")" : "") + ".");
         patch({ form: Object.assign({}, EMPTY_FORM), step: 0, results: [], screen: "form", savePromptOpen: false });
       }
 
       function exitQuiz() {
         setError("");
-        if (appState.results && appState.results.length) {
-          fmLog("Left quiz. Returning to results.");
-          patch({ screen: "results" });
-        } else {
-          fmLog("Left quiz. Opening My Rooms.");
-          patch({ screen: "rooms" });
-        }
+        if (appState.results && appState.results.length) patch({ screen: "results" });
+        else patch({ screen: "rooms" });
       }
 
       function copyList() {
         const plants = appState.results || [];
-        if (!plants.length) {
-          fmLog("Copy list skipped: no results.");
-          return;
-        }
+        if (!plants.length) return;
         const text = formatPlantList(plants);
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () {
-            fmLog("Copied plant list to clipboard.");
-            setToast("List copied to clipboard");
-          }).catch(function () {
-            fmLog("Clipboard copy failed.");
-            setToast("Could not copy");
-          });
-        } else {
-          fmLog("Clipboard API unavailable.");
-          setToast("Could not copy");
-        }
+          navigator.clipboard.writeText(text).then(function () { setToast("List copied to clipboard"); }).catch(function () { setToast("Could not copy"); });
+        } else setToast("Could not copy");
       }
 
       function saveRoom(name) {
         const plants = (appState.results || []).slice();
         const room = { id: uid(), name: name, form: Object.assign({}, appState.form), results: plants, savedAt: Date.now() };
-        fmLog("Created room \"" + name + "\" with " + plants.length + " plant(s): " + plantNames(plants) + ".", {
-          roomId: room.id,
-          form: room.form,
-        });
+        trackEvent("Save Room", { room: name, plants: plants.length });
         setAppState(function (prev) {
           return Object.assign({}, prev, { rooms: prev.rooms.concat([room]), savePromptOpen: false });
         });
@@ -1498,8 +1292,6 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       }
 
       function deleteRoom(id) {
-        const existing = (appState.rooms || []).filter(function (r) { return r.id === id; })[0];
-        fmLog("Deleted room \"" + (existing && existing.name ? existing.name : id) + "\".", { roomId: id });
         setAppState(function (prev) {
           return Object.assign({}, prev, { rooms: prev.rooms.filter(function (r) { return r.id !== id; }) });
         });
@@ -1511,13 +1303,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       };
 
       return html`
-        <div className="has-fm-log min-h-screen">
+        <div className="min-h-screen">
           <header className="border-b border-forest/10 bg-white/80 shadow-sm backdrop-blur">
             <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-4">
-              <button type="button" onClick=${function () {
-                fmLog("Header logo clicked. Opening Match.");
-                patch({ screen: "form" });
-              }} className="flex min-w-0 items-center gap-2.5 text-left sm:gap-3">
+              <button type="button" onClick=${function () { patch({ screen: "form" }); }} className="flex min-w-0 items-center gap-2.5 text-left sm:gap-3">
                 <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-forest text-white shadow-md sm:h-12 sm:w-12 sm:rounded-3xl sm:shadow-lg"><${IconLeaf} className="h-5 w-5 sm:h-6 sm:w-6" /></span>
                 <span className="min-w-0">
                   <span className="block text-lg font-extrabold leading-none text-forest sm:text-xl">FloraMatch</span>
@@ -1525,19 +1314,12 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                 </span>
               </button>
               <nav className="grid grid-cols-3 gap-1.5 sm:flex sm:gap-2">
+                <button type="button" onClick=${function () { patch({ screen: appState.results && appState.results.length ? "results" : "form" }); }} className=${navClass(screen === "form" || screen === "results")}>Match</button>
                 <button type="button" onClick=${function () {
-                  const next = appState.results && appState.results.length ? "results" : "form";
-                  fmLog("Nav: Match → " + next + ".");
-                  patch({ screen: next });
-                }} className=${navClass(screen === "form" || screen === "results")}>Match</button>
-                <button type="button" onClick=${function () {
-                  fmLog("Nav: Rooms (" + appState.rooms.length + " saved).");
+                  trackEvent("Rooms", { count: appState.rooms.length });
                   patch({ screen: "rooms" });
                 }} className=${navClass(screen === "rooms")}>${"Rooms" + (appState.rooms.length ? " (" + appState.rooms.length + ")" : "")}</button>
-                <button type="button" onClick=${function () {
-                  fmLog("Nav: Plant Doctor (coming soon).");
-                  patch({ screen: "doctor" });
-                }} className=${"inline-flex items-center justify-center gap-1 " + navClass(screen === "doctor")}>
+                <button type="button" onClick=${function () { patch({ screen: "doctor" }); }} className=${"inline-flex items-center justify-center gap-1 " + navClass(screen === "doctor")}>
                   <span>Doctor</span>
                   <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[9px] font-extrabold tracking-wide text-amber-800">SOON</span>
                 </button>
@@ -1568,17 +1350,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <${Results}
                 plants=${appState.results || []}
                 savePromptOpen=${appState.savePromptOpen}
-                onBack=${function () {
-                  fmLog("Back to quiz from results. Returning to step 1.");
-                  setError("");
-                  patch({ screen: "form", step: 0 });
-                }}
-                onReset=${function () { startFreshQuiz("new-quiz from results"); }}
+                onBack=${function () { setError(""); patch({ screen: "form", step: 0 }); }}
+                onReset=${startFreshQuiz}
                 onCopy=${copyList}
-                onRelax=${function () {
-                  fmLog("Broaden search clicked.");
-                  runMatch(true);
-                }}
+                onRelax=${function () { runMatch(true); }}
                 onSaveRoom=${saveRoom}
                 onDismissSave=${function () { patch({ savePromptOpen: false }); }}
               />
@@ -1593,16 +1368,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             Pet-toxicity notes are based on ASPCA data. This is general information, not a substitute for veterinary or botanical advice.
           </footer>
           ${toast && html`<${Toast} message=${toast} onDone=${function () { setToast(""); }} />`}
-          <${LogPanel} />
         </div>
       `;
     }
 
     ReactDOM.createRoot(document.getElementById("root")).render(html`<${App} />`);
   </script>
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
