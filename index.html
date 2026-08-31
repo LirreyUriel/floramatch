@@ -246,6 +246,45 @@
       }
       .podium-card { box-shadow: 0 8px 20px rgba(61, 155, 116, 0.08); }
     }
+    .fm-log-panel {
+      position: fixed;
+      left: 0.75rem;
+      right: 0.75rem;
+      bottom: 0.75rem;
+      z-index: 80;
+      display: flex;
+      flex-direction: column;
+      max-height: 38vh;
+      overflow: hidden;
+      border-radius: 1.25rem;
+      background: #1B2A24;
+      color: #E8F5E9;
+      box-shadow: 0 18px 40px rgba(27, 42, 36, 0.35);
+    }
+    @media (min-width: 640px) {
+      .fm-log-panel {
+        left: auto;
+        right: 1rem;
+        bottom: 1rem;
+        width: 24rem;
+        max-height: 44vh;
+      }
+    }
+    .fm-log-panel.collapsed {
+      max-height: none;
+    }
+    .fm-log-list {
+      overflow-y: auto;
+      padding: 0.5rem 0.85rem 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .fm-log-row + .fm-log-row { margin-top: 0.4rem; }
+    .fm-log-time { color: #5BB58A; margin-right: 0.4rem; }
+    @media (max-width: 639px) {
+      .has-fm-log { padding-bottom: 42vh; }
+    }
   </style>
 </head>
 <body class="text-charcoal leaf-pattern">
@@ -568,7 +607,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     }
 
     const html = htm.bind(React.createElement);
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
     const STORAGE_KEY = "floramatch.v5";
     const TOTAL_STEPS = 5;
@@ -630,9 +669,20 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
     const QUIZ_STEP_NAMES = ["Region", "Experience", "Preferences", "Placement", "Indoor climate"];
 
-    function fmLog(message, extra) {
+    const fmLogEntries = [];
+    const fmLogListeners = [];
+
+    function fmLog(message, extra, opts) {
+      const silent = opts && opts.silent;
       if (extra !== undefined) console.log("[FloraMatch] " + message, extra);
       else console.log("[FloraMatch] " + message);
+      if (silent) return;
+      const now = new Date();
+      const stamp = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0") + ":" + String(now.getSeconds()).padStart(2, "0");
+      fmLogEntries.push({ id: now.getTime() + "-" + fmLogEntries.length, time: stamp, message: message });
+      if (fmLogEntries.length > 80) fmLogEntries.shift();
+      const snapshot = fmLogEntries.slice();
+      for (let i = 0; i < fmLogListeners.length; i++) fmLogListeners[i](snapshot);
     }
 
     function quizStepLabel(step) {
@@ -687,7 +737,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           screen: state.screen,
           quizStep: (state.step || 0) + 1,
           rooms: (state.rooms || []).length,
-        });
+        }, { silent: true });
       } catch (e) {
         fmLog("Could not write saved state.", e && e.message);
       }
@@ -834,13 +884,13 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       const failed = failedState[0];
       const setFailed = failedState[1];
       useEffect(function () {
-        if (!props.src) fmLog("Plant photo missing for \"" + (props.alt || "unknown") + "\".");
+        if (!props.src) fmLog("Plant photo missing for \"" + (props.alt || "unknown") + "\".", undefined, { silent: true });
       }, [props.src, props.alt]);
       if (failed || !props.src) {
         return html`<div className="photo-fallback" aria-hidden="true"><${IconLeaf} className=${props.iconClass || "h-16 w-16 text-forest"} /></div>`;
       }
       return html`<img src=${props.src} alt=${props.alt || ""} className="plant-photo" loading="lazy" referrerPolicy="no-referrer" onError=${function () {
-        fmLog("Plant photo failed to load: " + props.src + " (" + (props.alt || "unknown") + ").");
+        fmLog("Plant photo failed to load: " + props.src + " (" + (props.alt || "unknown") + ").", undefined, { silent: true });
         setFailed(true);
       }} />`;
     }
@@ -955,6 +1005,52 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         return function () { clearTimeout(t); };
       }, [props.onDone]);
       return html`<div className="toast-in fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-2xl bg-forest px-5 py-3 text-sm font-medium text-white shadow-lg">${props.message}</div>`;
+    }
+
+    function LogPanel() {
+      const logsState = useState(fmLogEntries.slice());
+      const logs = logsState[0];
+      const setLogs = logsState[1];
+      const openState = useState(true);
+      const open = openState[0];
+      const setOpen = openState[1];
+      const listRef = useRef(null);
+      useEffect(function () {
+        function onLogs(next) { setLogs(next); }
+        fmLogListeners.push(onLogs);
+        return function () {
+          const i = fmLogListeners.indexOf(onLogs);
+          if (i !== -1) fmLogListeners.splice(i, 1);
+        };
+      }, []);
+      useEffect(function () {
+        const el = listRef.current;
+        if (el) el.scrollTop = el.scrollHeight;
+      }, [logs, open]);
+      return html`
+        <div className=${"fm-log-panel " + (open ? "" : "collapsed")} role="log" aria-live="polite" aria-label="Activity log">
+          <div className="flex items-center justify-between gap-2 px-3 py-2">
+            <p className="text-xs font-bold tracking-wide text-white">Activity log</p>
+            <div className="flex items-center gap-2">
+              <button type="button" className="text-[11px] font-semibold text-forest-light hover:text-white" onClick=${function () {
+                fmLogEntries.length = 0;
+                setLogs([]);
+                fmLog("Log cleared.");
+              }}>Clear</button>
+              <button type="button" className="rounded-lg bg-white/10 px-2 py-1 text-[11px] font-bold text-white hover:bg-white/20" onClick=${function () { setOpen(!open); }}>${open ? "Hide" : "Show"}</button>
+            </div>
+          </div>
+          ${open && html`
+            <div className="fm-log-list" ref=${listRef}>
+              ${logs.length === 0
+                ? html`<p className="text-white/50">No activity yet.</p>`
+                : logs.map(function (entry) {
+                    return html`<p key=${entry.id} className="fm-log-row"><span className="fm-log-time">${entry.time}</span><span>${entry.message}</span></p>`;
+                  })}
+            </div>
+          `}
+        </div>
+      `;
     }
 
     function PodiumCard(props) {
@@ -1313,13 +1409,13 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 
       function patch(partial) {
         if (partial.screen && partial.screen !== appState.screen) {
-          fmLog("Navigating to screen: " + partial.screen + ".");
+          fmLog("Navigating to screen: " + partial.screen + ".", undefined, { silent: true });
         }
         setAppState(function (prev) { return Object.assign({}, prev, partial); });
       }
 
       function changeForm(fields) {
-        fmLog("Quiz form updated.", fields);
+        fmLog("Quiz form updated.", fields, { silent: true });
         setAppState(function (prev) {
           return Object.assign({}, prev, { form: Object.assign({}, prev.form, fields) });
         });
@@ -1330,7 +1426,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         fmLog(relax ? "Broadening search (dropping pet, watering, placement, and climate filters)." : "Running plant match.");
         setAppState(function (prev) {
           const form = formPatch ? Object.assign({}, prev.form, formPatch) : prev.form;
-          fmLog("Match filters.", form);
+          fmLog("Match filters.", form, { silent: true });
           let matches = matchPlants(form);
           let usedRelax = false;
           if (relax && matches.length < 3) {
@@ -1415,7 +1511,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       };
 
       return html`
-        <div className="min-h-screen">
+        <div className="has-fm-log min-h-screen">
           <header className="border-b border-forest/10 bg-white/80 shadow-sm backdrop-blur">
             <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-4">
               <button type="button" onClick=${function () {
@@ -1497,6 +1593,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             Pet-toxicity notes are based on ASPCA data. This is general information, not a substitute for veterinary or botanical advice.
           </footer>
           ${toast && html`<${Toast} message=${toast} onDone=${function () { setToast(""); }} />`}
+          <${LogPanel} />
         </div>
       `;
     }
