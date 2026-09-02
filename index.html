@@ -3,8 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FloraMatch — Indoor plant matching by region and climate</title>
-  <meta name="description" content="Find houseplants that fit your region, experience, and room climate — then save matches by room." />
+  <title>FloraMatch — Find houseplants that fit your home</title>
+  <meta name="description" content="Match indoor plants to your region, experience, placement, and room climate. Take a short quiz and save your top plants by room." />
+  <link rel="canonical" href="https://floramatch.online/" />
+  <meta name="theme-color" content="#3D9B74" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FloraMatch" />
+  <meta property="og:url" content="https://floramatch.online/" />
+  <meta property="og:title" content="FloraMatch — Find houseplants that fit your home" />
+  <meta property="og:description" content="Match indoor plants to your region, experience, placement, and room climate. Take a short quiz and save your top plants by room." />
+  <meta property="og:image" content="https://floramatch.online/photos/4.jpg" />
+  <meta property="og:image:alt" content="Monstera, one of the houseplants in FloraMatch" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FloraMatch — Find houseplants that fit your home" />
+  <meta name="twitter:description" content="Match indoor plants to your region, experience, placement, and room climate." />
+  <meta name="twitter:image" content="https://floramatch.online/photos/4.jpg" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="https://floramatch.online/photos/4.jpg" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"FloraMatch","url":"https://floramatch.online/","description":"Match indoor plants to your region, experience, placement, and room climate.","applicationCategory":"LifestyleApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -254,8 +272,17 @@
 </head>
 <body class="text-charcoal leaf-pattern">
   <div id="root">
-    <p style="text-align:center;padding:3rem;color:#3D9B74;font-weight:600">Loading FloraMatch…</p>
+    <header style="text-align:center;padding:3rem 1.25rem 1.5rem">
+      <h1 style="margin:0;color:#3D9B74;font-size:1.75rem;font-weight:800">FloraMatch</h1>
+      <p style="margin:0.75rem auto 0;max-width:28rem;color:#2C3E50;line-height:1.6">Find houseplants that fit your region, experience, placement, and indoor climate. Take a short quiz, get a top-3 match, and save plants by room.</p>
+    </header>
   </div>
+  <noscript>
+    <main style="max-width:36rem;margin:0 auto;padding:1.5rem;color:#2C3E50">
+      <h1>FloraMatch — indoor plant matching</h1>
+      <p>FloraMatch recommends houseplants for your home based on where you live, how experienced you are, where you will place the plant, and whether the room is dry or humid. JavaScript is required to take the quiz.</p>
+    </main>
+  </noscript>
 
   <script>
 /**
@@ -1350,7 +1377,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
           <main className="mx-auto px-4 py-5 sm:py-10">
             ${screen === "form" && html`
               <div className="fade-up">
-                <div className="quiz-lede mx-auto mb-8 hidden max-w-xl text-center sm:block">
+                <div className="quiz-lede mx-auto mb-6 max-w-xl text-center sm:mb-8">
                   <h1 className="text-3xl font-extrabold tracking-tight text-forest sm:text-4xl">Find a plant that fits your home</h1>
                   <p className="mt-3 text-base leading-7 text-charcoal/75">One question at a time. Skip anything you are unsure about.</p>
                 </div>

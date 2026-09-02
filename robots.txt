@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://floramatch.online/sitemap.xml
